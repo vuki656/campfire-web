@@ -267,10 +267,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@dvukovic/dujo-ui@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@dvukovic/dujo-ui/-/dujo-ui-3.0.3.tgz#2bb0d7f4576d18dc7d72faf972c7e5667e75414c"
-  integrity sha512-AW+xqO/17dap2i0Kn1CxmcewJFg+zLWuUTjSZwztMOwqQ4dFF/D06LF0FMCTn1qdfdypsYF+QCZft99fhnKtcw==
+"@dvukovic/dujo-ui@3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@dvukovic/dujo-ui/-/dujo-ui-3.0.6.tgz#3a4ef06a9d1ebbe9549e211c999f4de1c5737c93"
+  integrity sha512-A5+iY/pyEPieLtJJZI1ZOUPKj8s3JEUHvkUkKt/FzkuRncmgrTilVw0sml99IqHRB1yOfUdxROT4bDXOg8goaQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@tippyjs/react" "^4.2.0"
@@ -2040,6 +2040,11 @@ graphql-tag@^2.12.0:
   integrity sha512-LPewEE1vzGkHnCO8zdOGogKsHHBdtpGyihow1UuMwp6RnZa0lAS7NcbvltLOuo4pi5diQCPASAXZkQq44ffixA==
   dependencies:
     tslib "^1.14.1"
+
+graphql@^15.5.0:
+  version "15.5.0"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.5.0.tgz#39d19494dbe69d1ea719915b578bf920344a69d5"
+  integrity sha512-OmaM7y0kaK31NKG31q4YbD2beNYa6jBBKtMFT6gLYJljHLJr42IqJ8KX08u3Li/0ifzTU5HjmoOOrwa5BRLeDA==
 
 gud@^1.0.0:
   version "1.0.0"
