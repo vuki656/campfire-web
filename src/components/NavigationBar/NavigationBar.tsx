@@ -1,10 +1,14 @@
 import { useQuery } from '@apollo/client'
+import { ExitIcon } from '@dvukovic/dujo-ui'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/dist/client/router'
 import React from 'react'
 
 import { USER } from '../../graphql/queries/User'
 import type { UserQuery } from '../../graphql/types'
 
 import {
+    NavigationBarLogoutButton,
     NavigationBarRoot,
     NavigationBarTitle,
     NavigationBarUser,
@@ -14,6 +18,14 @@ import {
 
 export const NavigationBar: React.FunctionComponent = () => {
     const { data } = useQuery<UserQuery>(USER)
+
+    const router = useRouter()
+
+    const handleLogout = () => {
+        Cookies.remove('token')
+
+        void router.push('/')
+    }
 
     return (
         <NavigationBarRoot>
@@ -33,6 +45,11 @@ export const NavigationBar: React.FunctionComponent = () => {
                         />
                     )
                     : null}
+                <NavigationBarLogoutButton
+                    icon={<ExitIcon />}
+                    onClick={handleLogout}
+                    variant="outlined"
+                />
             </NavigationBarUser>
         </NavigationBarRoot>
     )
