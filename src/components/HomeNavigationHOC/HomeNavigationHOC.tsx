@@ -30,11 +30,13 @@ export const HomeNavigationHOC: React.FunctionComponent = (props) => {
                 <HomeNavigationHOCItem
                     icon={<ListIcon />}
                     label="Campfires"
+                    onClick={() => void router.push('/home')}
                     variant="blank"
                 />
                 <HomeNavigationHOCItem
                     icon={<StarOutlinedIcon />}
                     label="Favorites"
+                    onClick={() => void router.push('/home/favorites')}
                     variant="blank"
                 />
                 <HomeNavigationHOCItem
