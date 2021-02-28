@@ -1,4 +1,3 @@
-import { IconButton } from '@dvukovic/dujo-ui'
 import styled from 'styled-components'
 
 export const NavigationBarRoot = styled('div')((props) => ({
@@ -12,6 +11,7 @@ export const NavigationBarRoot = styled('div')((props) => ({
 
 export const NavigationBarTitle = styled('p')((props) => ({
     ...props.theme.typography.title,
+    fontSize: '25px',
 }))
 
 export const NavigationBarUser = styled('div')((props) => ({
@@ -28,7 +28,3 @@ export const NavigationBarUserImage = styled('img')({
     borderRadius: '50%',
     margin: '0 20px',
 })
-
-export const NavigationBarLogoutButton = styled(IconButton)((props) => ({
-    padding: props.theme.spacing.xs,
-}))
