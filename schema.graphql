@@ -46,16 +46,6 @@ type CreateGroupPayload {
   group: GroupType!
 }
 
-input CreateUserInput {
-  username: String!
-  password: String!
-}
-
-type CreateUserPayload {
-  user: UserType!
-  token: String!
-}
-
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
@@ -78,19 +68,14 @@ type LogInUserPayload {
 }
 
 type Mutation {
-  createUser(input: CreateUserInput!): CreateUserPayload!
   logInUser(input: LogInUserInput!): LogInUserPayload!
   createGroup(input: CreateGroupInput!): CreateGroupPayload!
 }
 
 type Query {
-  user(args: UserArgs!): UserType
+  user: UserType
   userGroups: [GroupType!]!
   userJoinedGroups: [GroupType!]!
-}
-
-input UserArgs {
-  id: String!
 }
 
 type UserType {

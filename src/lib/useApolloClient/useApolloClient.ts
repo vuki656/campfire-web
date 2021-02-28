@@ -21,17 +21,15 @@ const createApolloClient = () => {
         uri: publicRuntimeConfig.API_URL,
     })
 
-    const authLink = setContext((operation, previousContext) => {
+    const authLink = setContext((_operation, previousContext) => {
         const { headers } = previousContext
 
-        const userId = Cookies.get('userId') ?? ''
         const token = Cookies.get('token') ?? ''
 
         return {
             headers: {
                 ...headers,
                 token: `Bearer ${token}`,
-                userId: userId,
             },
         }
     })

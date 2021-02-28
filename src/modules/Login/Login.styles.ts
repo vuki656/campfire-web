@@ -1,14 +1,14 @@
 import { Button } from '@dvukovic/dujo-ui'
 import styled from 'styled-components'
 
-export const LoginRoot = styled('div')((props) => ({
+export const LoginRoot = styled('div')({
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
     justifyContent: 'center',
     width: '100%',
-}))
+})
 
 export const LoginTitle = styled('p')((props) => ({
     ...props.theme.typography.title,
@@ -30,7 +30,7 @@ export const LoginButton = styled(Button)((props) => ({
 }))
 
 export const LoginNote = styled('div')((props) => ({
-    color: props.theme.palette.grey.light100,
+    color: props.theme.palette.grey.light200,
     marginTop: props.theme.spacing.lg,
     textAlign: 'center',
 }))

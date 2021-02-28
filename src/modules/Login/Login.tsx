@@ -61,7 +61,7 @@ export const Login: React.FunctionComponent = () => {
                     const token = response?.data?.logInUser.token ?? ''
 
                     Cookies.set('token', token)
-                    void router.push('/dashboard')
+                    void router.push('/home')
                 })
                 .catch((error: ApolloError) => {
                     const formErrors = error.graphQLErrors[0].extensions?.exception
@@ -105,7 +105,7 @@ export const Login: React.FunctionComponent = () => {
                     Login
                 </LoginButton>
                 <LoginNote>
-                    If you don't have an account, just put something in an we'll make one for you.
+                    If you don't have an account, just put something in and we'll make one for you.
                 </LoginNote>
             </LoginForm>
         </LoginRoot>

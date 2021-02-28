@@ -29,17 +29,6 @@ export type CreateGroupPayload = {
   group: GroupType;
 };
 
-export type CreateUserInput = {
-  username: Scalars['String'];
-  password: Scalars['String'];
-};
-
-export type CreateUserPayload = {
-  __typename?: 'CreateUserPayload';
-  user: UserType;
-  token: Scalars['String'];
-};
-
 
 export type GroupType = {
   __typename?: 'GroupType';
@@ -61,14 +50,8 @@ export type LogInUserPayload = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createUser: CreateUserPayload;
   logInUser: LogInUserPayload;
   createGroup: CreateGroupPayload;
-};
-
-
-export type MutationCreateUserArgs = {
-  input: CreateUserInput;
 };
 
 
@@ -86,15 +69,6 @@ export type Query = {
   user?: Maybe<UserType>;
   userGroups: Array<GroupType>;
   userJoinedGroups: Array<GroupType>;
-};
-
-
-export type QueryUserArgs = {
-  args: UserArgs;
-};
-
-export type UserArgs = {
-  id: Scalars['String'];
 };
 
 export type UserType = {
@@ -115,4 +89,15 @@ export type LogInUserMutation = (
     { __typename?: 'LogInUserPayload' }
     & Pick<LogInUserPayload, 'token'>
   ) }
+);
+
+export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserQuery = (
+  { __typename?: 'Query' }
+  & { user?: Maybe<(
+    { __typename?: 'UserType' }
+    & Pick<UserType, 'id' | 'username' | 'imageURL'>
+  )> }
 );
