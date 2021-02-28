@@ -18,7 +18,7 @@ export const LoginTitle = styled('p')((props) => ({
     textAlign: 'center',
 }))
 
-export const LoginForm = styled('div')((props) => ({
+export const LoginForm = styled('form')((props) => ({
     border: `1px solid ${props.theme.palette.grey.light300}`,
     borderRadius: '12px',
     padding: `${props.theme.spacing.xl} ${props.theme.spacing.lg}`,

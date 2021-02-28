@@ -1,0 +1,100 @@
+"""Exposes a URL that specifies the behaviour of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behaviour of this scalar."""
+  url: String!
+) on SCALAR
+
+"""
+Direct the client to resolve this field locally, either from the cache or local resolvers.
+"""
+directive @client(
+  """
+  When true, the client will never use the cache for this value. See
+  https://www.apollographql.com/docs/react/essentials/local-state/#forcing-resolvers-with-clientalways-true
+  """
+  always: Boolean
+) on FIELD | FRAGMENT_DEFINITION | INLINE_FRAGMENT
+
+"""
+Export this locally resolved field as a variable to be used in the remainder of this query. See
+https://www.apollographql.com/docs/react/essentials/local-state/#using-client-fields-as-variables
+"""
+directive @export(
+  """The variable name to export this field as."""
+  as: String!
+) on FIELD
+
+"""
+Specify a custom store key for this result. See
+https://www.apollographql.com/docs/react/advanced/caching/#the-connection-directive
+"""
+directive @connection(
+  """Specify the store key."""
+  key: String!
+
+  """
+  An array of query argument names to include in the generated custom store key.
+  """
+  filter: [String!]
+) on FIELD
+
+input CreateGroupInput {
+  name: String!
+}
+
+type CreateGroupPayload {
+  group: GroupType!
+}
+
+input CreateUserInput {
+  username: String!
+  password: String!
+}
+
+type CreateUserPayload {
+  user: UserType!
+  token: String!
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+type GroupType {
+  id: String!
+  name: String!
+  createdAt: DateTime!
+  author: UserType!
+}
+
+input LogInUserInput {
+  username: String!
+  password: String!
+}
+
+type LogInUserPayload {
+  token: String!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): CreateUserPayload!
+  logInUser(input: LogInUserInput!): LogInUserPayload!
+  createGroup(input: CreateGroupInput!): CreateGroupPayload!
+}
+
+type Query {
+  user(args: UserArgs!): UserType
+  userGroups: [GroupType!]!
+  userJoinedGroups: [GroupType!]!
+}
+
+input UserArgs {
+  id: String!
+}
+
+type UserType {
+  id: String!
+  username: String!
+  imageURL: String!
+}
