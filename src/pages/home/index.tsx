@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import NextHead from 'next/head'
 import * as React from 'react'
 
-import { HomeNavigationHOC } from '../../components/HomeNavigationHOC'
+import { HomeNavHOC } from '../../components/HomeNavHOC'
 import { NavigationBar } from '../../components/NavigationBar'
 import { HomeGroups } from '../../modules/HomeGroups'
 
@@ -15,9 +15,9 @@ const HomePage: NextPage = () => {
                 </title>
             </NextHead>
             <NavigationBar />
-            <HomeNavigationHOC>
+            <HomeNavHOC>
                 <HomeGroups />
-            </HomeNavigationHOC>
+            </HomeNavHOC>
         </>
     )
 }

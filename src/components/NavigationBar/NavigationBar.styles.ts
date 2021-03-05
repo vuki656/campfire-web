@@ -6,13 +6,21 @@ export const NavigationBarRoot = styled('div')((props) => ({
     display: 'flex',
     height: '60px',
     justifyContent: 'space-between',
-    padding: `${props.theme.spacing.md} ${props.theme.spacing.sm}`,
+    padding: `${props.theme.spacing.md} ${props.theme.spacing.lg}`,
 }))
 
-export const NavigationBarTitle = styled('p')((props) => ({
-    ...props.theme.typography.title,
+export const NavigationBarTitle = styled('div')((props) => ({
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
     fontSize: '25px',
+    fontWeight: 'bold',
+    justifyContent: 'flex-start',
 }))
+
+export const NavigationBarLogoTitle = styled('p')({
+    marginLeft: '10px',
+})
 
 export const NavigationBarUser = styled('div')((props) => ({
     alignItems: 'center',
@@ -20,11 +28,7 @@ export const NavigationBarUser = styled('div')((props) => ({
     justifyContent: 'center',
 }))
 
-export const NavigationBarUserName = styled('p')({
-    fontWeight: 'bold',
-})
-
 export const NavigationBarUserImage = styled('img')({
     borderRadius: '50%',
-    margin: '0 20px',
+    marginLeft: '20px',
 })

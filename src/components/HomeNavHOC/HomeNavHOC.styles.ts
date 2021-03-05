@@ -1,6 +1,7 @@
+import {Button} from '@dvukovic/dujo-ui'
 import styled from 'styled-components'
 
-export const HomeNavigationHOCRoot = styled('div')((props) => ({
+export const HomeNavHOCRoot = styled('div')((props) => ({
     display: 'grid',
     gridTemplateColumns: '0.2fr auto',
     margin: '0 auto',
@@ -8,8 +9,12 @@ export const HomeNavigationHOCRoot = styled('div')((props) => ({
     paddingTop: props.theme.spacing.lg,
 }))
 
-export const HomeNavigationHOCList = styled('div')((props) => ({
+export const HomeNavHOCList = styled('div')((props) => ({
     display: 'grid',
     gridTemplateColumns: '1fr',
     rowGap: props.theme.spacing.xs,
+}))
+
+export const HomeNavHOCListItem = styled(Button)((props) => ({
+    color: '#6e6d7a',
 }))

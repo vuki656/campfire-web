@@ -1,15 +1,16 @@
 import { useQuery } from '@apollo/client'
+import Image from 'next/image'
 import React from 'react'
 
 import { USER } from '../../graphql/queries/User'
 import type { UserQuery } from '../../graphql/types'
 
 import {
+    NavigationBarLogoTitle,
     NavigationBarRoot,
     NavigationBarTitle,
     NavigationBarUser,
     NavigationBarUserImage,
-    NavigationBarUserName,
 } from './NavigationBar.styles'
 
 export const NavigationBar: React.FunctionComponent = () => {
@@ -18,12 +19,19 @@ export const NavigationBar: React.FunctionComponent = () => {
     return (
         <NavigationBarRoot>
             <NavigationBarTitle>
-                🔥 Campfire
+                <Image
+                    height={35}
+                    src="/icons/logo-icon.svg"
+                    width={35}
+                />
+                <NavigationBarLogoTitle>
+                    Campfire
+                </NavigationBarLogoTitle>
             </NavigationBarTitle>
             <NavigationBarUser>
-                <NavigationBarUserName>
+                <p>
                     {data?.user?.username}
-                </NavigationBarUserName>
+                </p>
                 {data?.user?.imageURL
                     ? (
                         <NavigationBarUserImage

@@ -29,13 +29,12 @@ const ValidationSchema = Yup.object().shape({
     username: Yup.string()
         .required('Required')
         .min(4, 'Must be longer than 4 character'),
-
 })
 
 export const Login: React.FunctionComponent = () => {
     const router = useRouter()
 
-    const [logInUserMutation] = useMutation<LogInUserMutation, LogInUserMutationVariables>(LOG_IN_USER)
+    const [logInUserMutation, { loading }] = useMutation<LogInUserMutation, LogInUserMutationVariables>(LOG_IN_USER)
 
     const {
         errors,
@@ -100,6 +99,7 @@ export const Login: React.FunctionComponent = () => {
                 />
                 <LoginButton
                     fullWidth={true}
+                    loading={loading}
                     type="submit"
                 >
                     Login

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "lint": "eslint ./src",
     "start": "next start",
     "schema": "apollo client:download-schema --endpoint=http://localhost:8080/graphql schema.graphql",
     "codegen": "graphql-codegen --config ./src/graphql/codegen.yml"

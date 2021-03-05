@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "Avenir";
+  src: url("/fonts/avenir/Avenir.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lilita One";
+  src: url("/fonts/lilita-one/LilitaOne-Regular.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+* {
+    font-family: "Avenir"
+}
