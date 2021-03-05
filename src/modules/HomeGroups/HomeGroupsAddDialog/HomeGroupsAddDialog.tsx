@@ -41,15 +41,13 @@ export const HomeGroupsAddDialog: React.FunctionComponent = () => {
         },
         onSubmit: async (formValues) => {
             await createGroupMutation({
+                refetchQueries: ['Groups'],
                 variables: {
                     input: {
                         name: formValues.name,
                     },
                 },
             })
-                .catch((error) => {
-                    console.log(error)
-                })
 
             toggleOpen()
         },

@@ -30,6 +30,16 @@ export type CreateGroupPayload = {
 };
 
 
+export type EditGroupInput = {
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type EditGroupPayload = {
+  __typename?: 'EditGroupPayload';
+  group: GroupType;
+};
+
 export type GroupType = {
   __typename?: 'GroupType';
   id: Scalars['String'];
@@ -52,6 +62,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   logInUser: LogInUserPayload;
   createGroup: CreateGroupPayload;
+  editGroup: EditGroupPayload;
 };
 
 
@@ -62,6 +73,11 @@ export type MutationLogInUserArgs = {
 
 export type MutationCreateGroupArgs = {
   input: CreateGroupInput;
+};
+
+
+export type MutationEditGroupArgs = {
+  input: EditGroupInput;
 };
 
 export type Query = {
@@ -78,6 +94,15 @@ export type UserType = {
   imageURL: Scalars['String'];
 };
 
+export type GroupPayloadFragment = (
+  { __typename?: 'GroupType' }
+  & Pick<GroupType, 'id' | 'name'>
+  & { author: (
+    { __typename?: 'UserType' }
+    & Pick<UserType, 'id' | 'username' | 'imageURL'>
+  ) }
+);
+
 export type CreateGroupMutationVariables = Exact<{
   input: CreateGroupInput;
 }>;
@@ -89,7 +114,23 @@ export type CreateGroupMutation = (
     { __typename?: 'CreateGroupPayload' }
     & { group: (
       { __typename?: 'GroupType' }
-      & Pick<GroupType, 'id' | 'name'>
+      & GroupPayloadFragment
+    ) }
+  ) }
+);
+
+export type EditGroupMutationVariables = Exact<{
+  input: EditGroupInput;
+}>;
+
+
+export type EditGroupMutation = (
+  { __typename?: 'Mutation' }
+  & { editGroup: (
+    { __typename?: 'EditGroupPayload' }
+    & { group: (
+      { __typename?: 'GroupType' }
+      & GroupPayloadFragment
     ) }
   ) }
 );
@@ -105,6 +146,20 @@ export type LogInUserMutation = (
     { __typename?: 'LogInUserPayload' }
     & Pick<LogInUserPayload, 'token'>
   ) }
+);
+
+export type GroupsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GroupsQuery = (
+  { __typename?: 'Query' }
+  & { userGroups: Array<(
+    { __typename?: 'GroupType' }
+    & GroupPayloadFragment
+  )>, userJoinedGroups: Array<(
+    { __typename?: 'GroupType' }
+    & GroupPayloadFragment
+  )> }
 );
 
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;

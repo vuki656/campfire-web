@@ -51,6 +51,15 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+input EditGroupInput {
+  id: String!
+  name: String!
+}
+
+type EditGroupPayload {
+  group: GroupType!
+}
+
 type GroupType {
   id: String!
   name: String!
@@ -70,6 +79,7 @@ type LogInUserPayload {
 type Mutation {
   logInUser(input: LogInUserInput!): LogInUserPayload!
   createGroup(input: CreateGroupInput!): CreateGroupPayload!
+  editGroup(input: EditGroupInput!): EditGroupPayload!
 }
 
 type Query {

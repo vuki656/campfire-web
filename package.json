@@ -7,7 +7,7 @@
     "build": "next build",
     "lint": "eslint ./src",
     "start": "next start",
-    "schema": "apollo client:download-schema --endpoint=http://localhost:8080/graphql schema.graphql",
+    "schema": "apollo client:download-schema --endpoint=http://localhost:8080/graphql ./src/graphql/schema.graphql",
     "codegen": "graphql-codegen --config ./src/graphql/codegen.yml"
   },
   "dependencies": {
