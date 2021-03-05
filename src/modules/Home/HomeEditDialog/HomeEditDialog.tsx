@@ -19,9 +19,9 @@ import type {
 } from '../../../graphql/types'
 
 import type {
-    EditGroupFormTypes,
+    EditGroupFormType,
     HomeGroupsEditDialogProps,
-} from './HomeGroupEditDialog.types'
+} from './HomeEditDialog.types'
 
 const ValidationSchema = Yup.object().shape({
     name: Yup.string()
@@ -29,7 +29,7 @@ const ValidationSchema = Yup.object().shape({
         .min(3, 'Must be longer than 3 characters'),
 })
 
-export const HomeGroupsEditDialog: React.FunctionComponent<HomeGroupsEditDialogProps> = (props) => {
+export const HomeEditDialog: React.FunctionComponent<HomeGroupsEditDialogProps> = (props) => {
     const { group } = props
     const [isOpen, toggleOpen] = useToggle(false)
 
@@ -41,7 +41,7 @@ export const HomeGroupsEditDialog: React.FunctionComponent<HomeGroupsEditDialogP
         handleSubmit,
         resetForm,
         values,
-    } = useFormik<EditGroupFormTypes>({
+    } = useFormik<EditGroupFormType>({
         initialValues: {
             name: group.name,
         },

@@ -16,7 +16,7 @@ import type {
     CreateGroupMutationVariables,
 } from '../../../graphql/types'
 
-import type { CreateNewGroupFormTypes } from './HomeGroupsAddDialog.types'
+import type { CreateNewGroupFormType } from './HomeAddDialog.types'
 
 const ValidationSchema = Yup.object().shape({
     name: Yup.string()
@@ -24,7 +24,7 @@ const ValidationSchema = Yup.object().shape({
         .min(3, 'Must be longer than 3 characters'),
 })
 
-export const HomeGroupsAddDialog: React.FunctionComponent = () => {
+export const HomeAddDialog: React.FunctionComponent = () => {
     const [isOpen, toggleOpen] = useToggle(false)
 
     const [createGroupMutation] = useMutation<CreateGroupMutation, CreateGroupMutationVariables>(CREATE_GROUP)
@@ -35,7 +35,7 @@ export const HomeGroupsAddDialog: React.FunctionComponent = () => {
         handleSubmit,
         resetForm,
         values,
-    } = useFormik<CreateNewGroupFormTypes>({
+    } = useFormik<CreateNewGroupFormType>({
         initialValues: {
             name: '',
         },

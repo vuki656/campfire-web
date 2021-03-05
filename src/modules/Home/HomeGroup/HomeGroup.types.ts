@@ -8,6 +8,6 @@ export type GroupType = {
     }
 }
 
-export type HomeGroupsGroupProps = {
+export type HomeGroupProps = {
     group: GroupType
 }

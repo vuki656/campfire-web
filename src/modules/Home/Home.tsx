@@ -5,31 +5,31 @@ import { GROUPS } from '../../graphql/queries'
 import type { GroupsQuery } from '../../graphql/types'
 
 import {
-    HomeGroupsHeader,
-    HomeGroupsRoot,
-    HomeGroupsSection,
-    HomeGroupsTitle,
-} from './HomeGroups.styles'
-import { HomeGroupsAddDialog } from './HomeGroupsAddDialog'
-import { HomeGroupsGroup } from './HomeGroupsGroup'
+    HomeHeader,
+    HomeRoot,
+    HomeSection,
+    HomeTitle,
+} from './Home.styles'
+import { HomeAddDialog } from './HomeAddDialog'
+import { HomeGroup } from './HomeGroup/HomeGroup'
 
-export const HomeGroups: React.FunctionComponent = () => {
+export const Home: React.FunctionComponent = () => {
     const { data } = useQuery<GroupsQuery>(GROUPS)
 
     return (
-        <HomeGroupsRoot>
-            <HomeGroupsHeader>
-                <HomeGroupsTitle>
+        <HomeRoot>
+            <HomeHeader>
+                <HomeTitle>
                     Campfires
-                </HomeGroupsTitle>
-                <HomeGroupsAddDialog />
-            </HomeGroupsHeader>
-            <HomeGroupsSection>
+                </HomeTitle>
+                <HomeAddDialog />
+            </HomeHeader>
+            <HomeSection>
                 {data?.userGroups
                     ? (
                         data?.userGroups.map((group) => {
                             return (
-                                <HomeGroupsGroup
+                                <HomeGroup
                                     group={group}
                                     key={group.id}
                                 />
@@ -41,18 +41,18 @@ export const HomeGroups: React.FunctionComponent = () => {
                             Looks like you haven't created any campfires yet. Go make one dude.
                         </p>
                     )}
-            </HomeGroupsSection>
-            <HomeGroupsHeader>
-                <HomeGroupsTitle>
+            </HomeSection>
+            <HomeHeader>
+                <HomeTitle>
                     Joined Campfires
-                </HomeGroupsTitle>
-            </HomeGroupsHeader>
-            <HomeGroupsSection>
+                </HomeTitle>
+            </HomeHeader>
+            <HomeSection>
                 {data?.userGroups
                     ? (
                         data?.userJoinedGroups.map((group) => {
                             return (
-                                <HomeGroupsGroup
+                                <HomeGroup
                                     group={group}
                                     key={group.id}
                                 />
@@ -64,7 +64,7 @@ export const HomeGroups: React.FunctionComponent = () => {
                             You haven't joined any campfires.
                         </p>
                     )}
-            </HomeGroupsSection>
-        </HomeGroupsRoot>
+            </HomeSection>
+        </HomeRoot>
     )
 }

@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { HomeNavHOC } from '../../components/HomeNavHOC'
 import { NavigationBar } from '../../components/NavigationBar'
-import { HomeGroups } from '../../modules/HomeGroups'
+import { Home } from '../../modules/Home'
 
 const HomePage: NextPage = () => {
     return (
@@ -16,7 +16,7 @@ const HomePage: NextPage = () => {
             </NextHead>
             <NavigationBar />
             <HomeNavHOC>
-                <HomeGroups />
+                <Home />
             </HomeNavHOC>
         </>
     )
