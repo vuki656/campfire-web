@@ -1,4 +1,4 @@
-import {Button} from '@dvukovic/dujo-ui'
+import { Button } from '@dvukovic/dujo-ui'
 import styled from 'styled-components'
 
 export const HomeNavHOCRoot = styled('div')((props) => ({

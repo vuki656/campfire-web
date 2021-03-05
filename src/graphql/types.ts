@@ -78,6 +78,22 @@ export type UserType = {
   imageURL: Scalars['String'];
 };
 
+export type CreateGroupMutationVariables = Exact<{
+  input: CreateGroupInput;
+}>;
+
+
+export type CreateGroupMutation = (
+  { __typename?: 'Mutation' }
+  & { createGroup: (
+    { __typename?: 'CreateGroupPayload' }
+    & { group: (
+      { __typename?: 'GroupType' }
+      & Pick<GroupType, 'id' | 'name'>
+    ) }
+  ) }
+);
+
 export type LogInUserMutationVariables = Exact<{
   input: LogInUserInput;
 }>;
