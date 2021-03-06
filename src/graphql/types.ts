@@ -29,6 +29,17 @@ export type CreateGroupPayload = {
   group: GroupType;
 };
 
+export type CreatePostInput = {
+  description: Scalars['String'];
+  link: Scalars['String'];
+  groupId: Scalars['String'];
+};
+
+export type CreatePostPayload = {
+  __typename?: 'CreatePostPayload';
+  post: PostType;
+};
+
 
 export type EditGroupInput = {
   id: Scalars['String'];
@@ -40,12 +51,17 @@ export type EditGroupPayload = {
   group: GroupType;
 };
 
+export type GroupArgs = {
+  groupId: Scalars['String'];
+};
+
 export type GroupType = {
   __typename?: 'GroupType';
   id: Scalars['String'];
   name: Scalars['String'];
   createdAt: Scalars['DateTime'];
   author: UserType;
+  posts?: Maybe<Array<PostType>>;
 };
 
 export type LogInUserInput = {
@@ -63,6 +79,7 @@ export type Mutation = {
   logInUser: LogInUserPayload;
   createGroup: CreateGroupPayload;
   editGroup: EditGroupPayload;
+  createPost: CreatePostPayload;
 };
 
 
@@ -80,11 +97,36 @@ export type MutationEditGroupArgs = {
   input: EditGroupInput;
 };
 
+
+export type MutationCreatePostArgs = {
+  input: CreatePostInput;
+};
+
+export type PostType = {
+  __typename?: 'PostType';
+  id: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  createdAt: Scalars['DateTime'];
+  link: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
+  siteName?: Maybe<Scalars['String']>;
+  imageLink?: Maybe<Scalars['String']>;
+  faviconLink?: Maybe<Scalars['String']>;
+  author: UserType;
+  group?: Maybe<GroupType>;
+};
+
 export type Query = {
   __typename?: 'Query';
   user?: Maybe<UserType>;
+  group?: Maybe<GroupType>;
   userGroups: Array<GroupType>;
   userJoinedGroups: Array<GroupType>;
+};
+
+
+export type QueryGroupArgs = {
+  args: GroupArgs;
 };
 
 export type UserType = {
@@ -97,6 +139,18 @@ export type UserType = {
 export type GroupPayloadFragment = (
   { __typename?: 'GroupType' }
   & Pick<GroupType, 'id' | 'name'>
+  & { posts?: Maybe<Array<(
+    { __typename?: 'PostType' }
+    & PostPayloadFragment
+  )>>, author: (
+    { __typename?: 'UserType' }
+    & Pick<UserType, 'id' | 'username' | 'imageURL'>
+  ) }
+);
+
+export type PostPayloadFragment = (
+  { __typename?: 'PostType' }
+  & Pick<PostType, 'id' | 'description' | 'createdAt' | 'title' | 'siteName' | 'imageLink' | 'faviconLink' | 'link'>
   & { author: (
     { __typename?: 'UserType' }
     & Pick<UserType, 'id' | 'username' | 'imageURL'>
@@ -135,6 +189,22 @@ export type EditGroupMutation = (
   ) }
 );
 
+export type CreatePostMutationVariables = Exact<{
+  input: CreatePostInput;
+}>;
+
+
+export type CreatePostMutation = (
+  { __typename?: 'Mutation' }
+  & { createPost: (
+    { __typename?: 'CreatePostPayload' }
+    & { post: (
+      { __typename?: 'PostType' }
+      & PostPayloadFragment
+    ) }
+  ) }
+);
+
 export type LogInUserMutationVariables = Exact<{
   input: LogInUserInput;
 }>;
@@ -157,6 +227,19 @@ export type GroupsQuery = (
     { __typename?: 'GroupType' }
     & GroupPayloadFragment
   )>, userJoinedGroups: Array<(
+    { __typename?: 'GroupType' }
+    & GroupPayloadFragment
+  )> }
+);
+
+export type GroupQueryVariables = Exact<{
+  args: GroupArgs;
+}>;
+
+
+export type GroupQuery = (
+  { __typename?: 'Query' }
+  & { group?: Maybe<(
     { __typename?: 'GroupType' }
     & GroupPayloadFragment
   )> }

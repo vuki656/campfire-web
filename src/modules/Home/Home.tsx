@@ -11,7 +11,7 @@ import {
     HomeTitle,
 } from './Home.styles'
 import { HomeAddDialog } from './HomeAddDialog'
-import { HomeGroup } from './HomeGroup/HomeGroup'
+import { HomeGroup } from './HomeGroup'
 
 export const Home: React.FunctionComponent = () => {
     const { data } = useQuery<GroupsQuery>(GROUPS)

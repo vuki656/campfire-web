@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 import { USER } from '../../../graphql/queries'
@@ -17,10 +18,19 @@ import type { HomeGroupProps } from './HomeGroup.types'
 export const HomeGroup: React.FunctionComponent<HomeGroupProps> = (props) => {
     const { group } = props
 
+    const router = useRouter()
+
     const { data } = useQuery<UserQuery>(USER)
 
+    const handleClick = () => {
+        void router.push({
+            pathname: '/home/groups/[groupId]',
+            query: { groupId: group.id },
+        })
+    }
+
     return (
-        <HomeGroupRoot>
+        <HomeGroupRoot onClick={handleClick}>
             <HomeGroupHeader>
                 <HomeGroupTitle>
                     {group.name}

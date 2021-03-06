@@ -1,2 +1,2 @@
-export * from './HomeGroupsGroup'
-export * from "./HomeGroup.types"
+export * from './HomeGroup'
+export * from './HomeGroup.types'

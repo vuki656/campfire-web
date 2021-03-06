@@ -46,6 +46,16 @@ type CreateGroupPayload {
   group: GroupType!
 }
 
+input CreatePostInput {
+  description: String!
+  link: String!
+  groupId: String!
+}
+
+type CreatePostPayload {
+  post: PostType!
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
@@ -60,11 +70,16 @@ type EditGroupPayload {
   group: GroupType!
 }
 
+input GroupArgs {
+  groupId: String!
+}
+
 type GroupType {
   id: String!
   name: String!
   createdAt: DateTime!
   author: UserType!
+  posts: [PostType!]
 }
 
 input LogInUserInput {
@@ -80,10 +95,25 @@ type Mutation {
   logInUser(input: LogInUserInput!): LogInUserPayload!
   createGroup(input: CreateGroupInput!): CreateGroupPayload!
   editGroup(input: EditGroupInput!): EditGroupPayload!
+  createPost(input: CreatePostInput!): CreatePostPayload!
+}
+
+type PostType {
+  id: String!
+  description: String
+  createdAt: DateTime!
+  link: String!
+  title: String
+  siteName: String
+  imageLink: String
+  faviconLink: String
+  author: UserType!
+  group: GroupType
 }
 
 type Query {
   user: UserType
+  group(args: GroupArgs!): GroupType
   userGroups: [GroupType!]!
   userJoinedGroups: [GroupType!]!
 }

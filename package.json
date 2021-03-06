@@ -13,6 +13,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.11",
     "@dvukovic/dujo-ui": "3.1.1",
+    "dayjs": "^1.10.4",
     "formik": "^2.2.6",
     "graphql": "^15.5.0",
     "js-cookie": "^2.2.1",

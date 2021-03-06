@@ -10,6 +10,7 @@ export const HomeGroupActions = styled('div')({
 export const HomeGroupRoot = styled('div')((props) => ({
     ':hover': {
         [HomeGroupActions]: { opacity: 1 },
+        backgroundColor: props.theme.palette.grey.light500,
     },
     [HomeGroupActions]: { opacity: 0 },
     border: `1px solid ${props.theme.palette.grey.light300}`,

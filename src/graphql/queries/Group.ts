@@ -13,3 +13,12 @@ export const GROUPS = gql`
     }
     ${GROUP_PAYLOAD}
 `
+
+export const GROUP = gql`
+    query Group($args: GroupArgs!) {
+        group(args: $args)  {
+            ...GroupPayload
+        }
+    }
+    ${GROUP_PAYLOAD}
+`
