@@ -8,29 +8,30 @@ import { useRouter } from 'next/dist/client/router'
 import Image from 'next/image'
 import React from 'react'
 
-import { FAVORITE_POST } from '../../../graphql/mutations/Post'
-import { USER } from '../../../graphql/queries'
+import { FAVORITE_POST } from '../../graphql/mutations/Post'
+import { USER } from '../../graphql/queries'
 import type {
     FavoritePostMutation,
     FavoritePostMutationVariables,
     UserQuery,
-} from '../../../graphql/types'
+} from '../../graphql/types'
 
 import {
-    GroupPostActions,
-    GroupPostAuthorImage,
-    GroupPostAuthorUsername,
-    GroupPostContent,
-    GroupPostDate,
-    GroupPostDescription,
-    GroupPostHeader,
-    GroupPostImage,
-    GroupPostRoot,
-} from './GroupPost.styles'
-import type { GroupPostProps } from './GroupPost.types'
+    PostActions,
+    PostAuthorImage,
+    PostAuthorUsername,
+    PostContent,
+    PostDate,
+    PostDescription,
+    PostHeader,
+    PostImage,
+    PostRoot,
+} from './Post.styles'
+import type { PostProps } from './Post.types'
 
-export const GroupPost: React.FunctionComponent<GroupPostProps> = (props) => {
+export const Post: React.FunctionComponent<PostProps> = (props) => {
     const { post } = props
+
     const { data } = useQuery<UserQuery>(USER)
 
     const router = useRouter()
@@ -39,7 +40,7 @@ export const GroupPost: React.FunctionComponent<GroupPostProps> = (props) => {
 
     const handleFavorite = () => {
         void favoritePostMutation({
-            refetchQueries: ['Group'],
+            refetchQueries: ['Group', 'FavoritePosts'],
             variables: {
                 input: {
                     postId: post.id,
@@ -48,39 +49,39 @@ export const GroupPost: React.FunctionComponent<GroupPostProps> = (props) => {
         })
     }
 
-    const isFavorited = post.favoritedBy.some((favorite) => {
+    const isFavorited = post.favoritedBy?.some((favorite) => {
         return data.user.id === favorite.userId
     })
 
     return (
-        <GroupPostRoot>
-            <GroupPostHeader>
-                <GroupPostAuthorImage
+        <PostRoot>
+            <PostHeader>
+                <PostAuthorImage
                     height={40}
                     src={post.author.imageURL}
                     width={40}
                 />
-                <GroupPostAuthorUsername>
+                <PostAuthorUsername>
                     {post.author.username}
-                </GroupPostAuthorUsername>
-                <GroupPostDate>
+                </PostAuthorUsername>
+                <PostDate>
                     {dayjs(post.createdAt).format('HH:MM A MMM D, YYYY')}
-                </GroupPostDate>
-            </GroupPostHeader>
-            <GroupPostContent>
+                </PostDate>
+            </PostHeader>
+            <PostContent>
                 {post.description
                     ? (
-                        <GroupPostDescription>
+                        <PostDescription>
                             {post.description}
-                        </GroupPostDescription>
+                        </PostDescription>
                     )
                     : null}
-                <GroupPostImage
+                <PostImage
                     alt={post.title}
                     loading="lazy"
                     src={post.imageLink}
                 />
-                <GroupPostActions>
+                <PostActions>
                     <Button
                         onClick={handleFavorite}
                         startIcon={(
@@ -97,7 +98,7 @@ export const GroupPost: React.FunctionComponent<GroupPostProps> = (props) => {
                         )}
                         variant="outlined"
                     >
-                        {post.favoritedBy.length}
+                        {post.favoritedBy?.length}
                         {' '}
                         Favourite
                     </Button>
@@ -109,8 +110,8 @@ export const GroupPost: React.FunctionComponent<GroupPostProps> = (props) => {
                     >
                         Source
                     </Button>
-                </GroupPostActions>
-            </GroupPostContent>
-        </GroupPostRoot>
+                </PostActions>
+            </PostContent>
+        </PostRoot>
     )
 }

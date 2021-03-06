@@ -126,6 +126,7 @@ type Query {
   group(args: GroupArgs!): GroupType
   userGroups: [GroupType!]!
   userJoinedGroups: [GroupType!]!
+  favoritePosts: [PostType!]!
 }
 
 type UserType {

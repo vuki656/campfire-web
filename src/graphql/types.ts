@@ -138,6 +138,7 @@ export type Query = {
   group?: Maybe<GroupType>;
   userGroups: Array<GroupType>;
   userJoinedGroups: Array<GroupType>;
+  favoritePosts: Array<PostType>;
 };
 
 
@@ -271,6 +272,17 @@ export type GroupQuery = (
   & { group?: Maybe<(
     { __typename?: 'GroupType' }
     & GroupPayloadFragment
+  )> }
+);
+
+export type FavoritePostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FavoritePostsQuery = (
+  { __typename?: 'Query' }
+  & { favoritePosts: Array<(
+    { __typename?: 'PostType' }
+    & PostPayloadFragment
   )> }
 );
 

@@ -6,9 +6,9 @@ export type PostType = {
     title?: string
     imageLink?: string
     faviconLink?: string
-    favoritedBy: {
+    favoritedBy?: {
       userId: string
-    }[]
+    }[] | null
     siteName?: string
     author: {
         id: string
@@ -17,6 +17,6 @@ export type PostType = {
     }
 }
 
-export type GroupPostProps = {
+export type PostProps = {
     post: PostType
 }

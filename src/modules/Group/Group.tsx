@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/dist/client/router'
 import React from 'react'
 
+import { Post } from '../../components/Post'
 import { GROUP } from '../../graphql/queries'
 import type {
     GroupQuery,
@@ -15,7 +16,6 @@ import {
     GroupTitle,
 } from './Group.styles'
 import { GroupAddDialog } from './GroupAddDialog'
-import { GroupPost } from './GroupPost'
 
 export const Group: React.FunctionComponent = () => {
     const router = useRouter()
@@ -40,7 +40,7 @@ export const Group: React.FunctionComponent = () => {
             <GroupPosts>
                 {data?.group?.posts?.map((post) => {
                     return (
-                        <GroupPost
+                        <Post
                             key={post.id}
                             post={post}
                         />

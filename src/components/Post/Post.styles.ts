@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const GroupPostRoot = styled('div')((props) => ({
+export const PostRoot = styled('div')((props) => ({
     borderBottom: `1px solid ${props.theme.palette.grey.light350}`,
     display: 'flex',
     flexDirection: 'column',
@@ -8,7 +8,7 @@ export const GroupPostRoot = styled('div')((props) => ({
     padding: `${props.theme.spacing.md} 0`,
 }))
 
-export const GroupPostHeader = styled('div')((props) => ({
+export const PostHeader = styled('div')((props) => ({
     display: 'grid',
     gridTemplateAreas: `
         "image username"
@@ -18,40 +18,40 @@ export const GroupPostHeader = styled('div')((props) => ({
     marginBottom: props.theme.spacing.md,
 }))
 
-export const GroupPostAuthorImage = styled('img')((props) => ({
+export const PostAuthorImage = styled('img')((props) => ({
     borderRadius: '50%',
     gridArea: 'image',
     marginRight: props.theme.spacing.md,
 }))
 
-export const GroupPostAuthorUsername = styled('p')({
+export const PostAuthorUsername = styled('p')({
     fontWeight: 'bold',
     gridArea: 'username',
 })
 
-export const GroupPostDate = styled('div')((props) => ({
+export const PostDate = styled('div')((props) => ({
     color: props.theme.palette.grey.light200,
     fontSize: '13px',
     gridArea: 'date',
 }))
 
-export const GroupPostContent = styled('div')((props) => ({
+export const PostContent = styled('div')((props) => ({
     alignItems: 'flex-start',
     display: 'grid',
     gridTemplateColumns: '1fr',
     rowGap: props.theme.spacing.md,
 }))
 
-export const GroupPostActions = styled('div')((props) => ({
+export const PostActions = styled('div')((props) => ({
     columnGap: props.theme.spacing.sm,
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 150px)',
     gridTemplateRows: '1fr',
 }))
 
-export const GroupPostDescription = styled('p')({})
+export const PostDescription = styled('p')({})
 
-export const GroupPostImage = styled('img')({
+export const PostImage = styled('img')({
     maxHeight: '400px',
     maxWidth: '400px',
     objectFit: 'scale-down',
