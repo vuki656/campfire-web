@@ -51,6 +51,15 @@ export type EditGroupPayload = {
   group: GroupType;
 };
 
+export type FavoritePostInput = {
+  postId: Scalars['String'];
+};
+
+export type FavoriteType = {
+  __typename?: 'FavoriteType';
+  userId: Scalars['String'];
+};
+
 export type GroupArgs = {
   groupId: Scalars['String'];
 };
@@ -80,6 +89,7 @@ export type Mutation = {
   createGroup: CreateGroupPayload;
   editGroup: EditGroupPayload;
   createPost: CreatePostPayload;
+  favoritePost: Scalars['Boolean'];
 };
 
 
@@ -102,6 +112,11 @@ export type MutationCreatePostArgs = {
   input: CreatePostInput;
 };
 
+
+export type MutationFavoritePostArgs = {
+  input: FavoritePostInput;
+};
+
 export type PostType = {
   __typename?: 'PostType';
   id: Scalars['String'];
@@ -113,6 +128,7 @@ export type PostType = {
   imageLink?: Maybe<Scalars['String']>;
   faviconLink?: Maybe<Scalars['String']>;
   author: UserType;
+  favoritedBy?: Maybe<Array<FavoriteType>>;
   group?: Maybe<GroupType>;
 };
 
@@ -151,7 +167,10 @@ export type GroupPayloadFragment = (
 export type PostPayloadFragment = (
   { __typename?: 'PostType' }
   & Pick<PostType, 'id' | 'description' | 'createdAt' | 'title' | 'siteName' | 'imageLink' | 'faviconLink' | 'link'>
-  & { author: (
+  & { favoritedBy?: Maybe<Array<(
+    { __typename?: 'FavoriteType' }
+    & Pick<FavoriteType, 'userId'>
+  )>>, author: (
     { __typename?: 'UserType' }
     & Pick<UserType, 'id' | 'username' | 'imageURL'>
   ) }
@@ -203,6 +222,16 @@ export type CreatePostMutation = (
       & PostPayloadFragment
     ) }
   ) }
+);
+
+export type FavoritePostMutationVariables = Exact<{
+  input: FavoritePostInput;
+}>;
+
+
+export type FavoritePostMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'favoritePost'>
 );
 
 export type LogInUserMutationVariables = Exact<{

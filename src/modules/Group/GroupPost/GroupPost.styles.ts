@@ -42,6 +42,13 @@ export const GroupPostContent = styled('div')((props) => ({
     rowGap: props.theme.spacing.md,
 }))
 
+export const GroupPostActions = styled('div')((props) => ({
+    columnGap: props.theme.spacing.sm,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 150px)',
+    gridTemplateRows: '1fr',
+}))
+
 export const GroupPostDescription = styled('p')({})
 
 export const GroupPostImage = styled('img')({

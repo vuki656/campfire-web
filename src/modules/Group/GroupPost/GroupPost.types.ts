@@ -6,6 +6,9 @@ export type PostType = {
     title?: string
     imageLink?: string
     faviconLink?: string
+    favoritedBy: {
+      userId: string
+    }[]
     siteName?: string
     author: {
         id: string

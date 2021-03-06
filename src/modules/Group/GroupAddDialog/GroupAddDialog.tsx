@@ -32,7 +32,7 @@ export const GroupAddDialog: React.FunctionComponent = () => {
 
     const router = useRouter()
 
-    const [createPostMutation] = useMutation<CreatePostMutation, CreatePostMutationVariables>(CREATE_POST)
+    const [createPostMutation, { loading }] = useMutation<CreatePostMutation, CreatePostMutationVariables>(CREATE_POST)
 
     const {
         errors,
@@ -106,6 +106,7 @@ export const GroupAddDialog: React.FunctionComponent = () => {
                             Cancel
                         </Button>
                         <Button
+                            loading={loading}
                             type="submit"
                             variant="outlined"
                         >

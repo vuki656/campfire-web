@@ -10,6 +10,9 @@ export const POST_PAYLOAD = gql`
         imageLink
         faviconLink
         link
+        favoritedBy {
+            userId
+        }
         author {
             id
             username
