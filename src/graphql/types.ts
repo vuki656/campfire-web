@@ -41,6 +41,16 @@ export type CreatePostPayload = {
 };
 
 
+export type DeleteInviteInput = {
+  groupId: Scalars['String'];
+  invitedUserId: Scalars['String'];
+};
+
+export type DeleteInvitePayload = {
+  __typename?: 'DeleteInvitePayload';
+  invite: InviteType;
+};
+
 export type EditGroupInput = {
   id: Scalars['String'];
   name: Scalars['String'];
@@ -64,6 +74,10 @@ export type GroupArgs = {
   groupId: Scalars['String'];
 };
 
+export type GroupInvitesArgs = {
+  groupId: Scalars['String'];
+};
+
 export type GroupType = {
   __typename?: 'GroupType';
   id: Scalars['String'];
@@ -71,6 +85,23 @@ export type GroupType = {
   createdAt: Scalars['DateTime'];
   author: UserType;
   posts?: Maybe<Array<PostType>>;
+};
+
+export type InviteType = {
+  __typename?: 'InviteType';
+  fromUser: UserType;
+  toUser: UserType;
+};
+
+export type InviteUserInput = {
+  fromUserId: Scalars['String'];
+  toUserId: Scalars['String'];
+  groupId: Scalars['String'];
+};
+
+export type InviteUserPayload = {
+  __typename?: 'InviteUserPayload';
+  invite: InviteType;
 };
 
 export type LogInUserInput = {
@@ -86,8 +117,10 @@ export type LogInUserPayload = {
 export type Mutation = {
   __typename?: 'Mutation';
   logInUser: LogInUserPayload;
+  inviteUser: InviteUserPayload;
   createGroup: CreateGroupPayload;
   editGroup: EditGroupPayload;
+  deleteInvite: DeleteInvitePayload;
   createPost: CreatePostPayload;
   favoritePost: Scalars['Boolean'];
 };
@@ -95,6 +128,11 @@ export type Mutation = {
 
 export type MutationLogInUserArgs = {
   input: LogInUserInput;
+};
+
+
+export type MutationInviteUserArgs = {
+  input: InviteUserInput;
 };
 
 
@@ -108,6 +146,11 @@ export type MutationEditGroupArgs = {
 };
 
 
+export type MutationDeleteInviteArgs = {
+  input: DeleteInviteInput;
+};
+
+
 export type MutationCreatePostArgs = {
   input: CreatePostInput;
 };
@@ -115,6 +158,10 @@ export type MutationCreatePostArgs = {
 
 export type MutationFavoritePostArgs = {
   input: FavoritePostInput;
+};
+
+export type NonGroupMembersArgs = {
+  groupId: Scalars['String'];
 };
 
 export type PostType = {
@@ -135,15 +182,27 @@ export type PostType = {
 export type Query = {
   __typename?: 'Query';
   user?: Maybe<UserType>;
+  nonGroupMembers: Array<UserType>;
   group?: Maybe<GroupType>;
   userGroups: Array<GroupType>;
   userJoinedGroups: Array<GroupType>;
+  groupInvites: Array<InviteType>;
   favoritePosts: Array<PostType>;
+};
+
+
+export type QueryNonGroupMembersArgs = {
+  args: NonGroupMembersArgs;
 };
 
 
 export type QueryGroupArgs = {
   args: GroupArgs;
+};
+
+
+export type QueryGroupInvitesArgs = {
+  args: GroupInvitesArgs;
 };
 
 export type UserType = {
@@ -209,6 +268,28 @@ export type EditGroupMutation = (
   ) }
 );
 
+export type DeleteInviteMutationVariables = Exact<{
+  input: DeleteInviteInput;
+}>;
+
+
+export type DeleteInviteMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteInvite: (
+    { __typename?: 'DeleteInvitePayload' }
+    & { invite: (
+      { __typename?: 'InviteType' }
+      & { fromUser: (
+        { __typename?: 'UserType' }
+        & Pick<UserType, 'id'>
+      ), toUser: (
+        { __typename?: 'UserType' }
+        & Pick<UserType, 'id'>
+      ) }
+    ) }
+  ) }
+);
+
 export type CreatePostMutationVariables = Exact<{
   input: CreatePostInput;
 }>;
@@ -248,6 +329,28 @@ export type LogInUserMutation = (
   ) }
 );
 
+export type InviteUserMutationVariables = Exact<{
+  input: InviteUserInput;
+}>;
+
+
+export type InviteUserMutation = (
+  { __typename?: 'Mutation' }
+  & { inviteUser: (
+    { __typename?: 'InviteUserPayload' }
+    & { invite: (
+      { __typename?: 'InviteType' }
+      & { fromUser: (
+        { __typename?: 'UserType' }
+        & Pick<UserType, 'id' | 'username' | 'imageURL'>
+      ), toUser: (
+        { __typename?: 'UserType' }
+        & Pick<UserType, 'id' | 'username' | 'imageURL'>
+      ) }
+    ) }
+  ) }
+);
+
 export type GroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -272,6 +375,38 @@ export type GroupQuery = (
   & { group?: Maybe<(
     { __typename?: 'GroupType' }
     & GroupPayloadFragment
+  )> }
+);
+
+export type NonGroupMembersQueryVariables = Exact<{
+  args: NonGroupMembersArgs;
+}>;
+
+
+export type NonGroupMembersQuery = (
+  { __typename?: 'Query' }
+  & { nonGroupMembers: Array<(
+    { __typename?: 'UserType' }
+    & Pick<UserType, 'id' | 'imageURL' | 'username'>
+  )> }
+);
+
+export type GroupInvitesQueryVariables = Exact<{
+  args: GroupInvitesArgs;
+}>;
+
+
+export type GroupInvitesQuery = (
+  { __typename?: 'Query' }
+  & { groupInvites: Array<(
+    { __typename?: 'InviteType' }
+    & { fromUser: (
+      { __typename?: 'UserType' }
+      & Pick<UserType, 'id' | 'imageURL' | 'username'>
+    ), toUser: (
+      { __typename?: 'UserType' }
+      & Pick<UserType, 'id' | 'imageURL' | 'username'>
+    ) }
   )> }
 );
 

@@ -1,10 +1,11 @@
 import styled from 'styled-components'
 
-export const PageHeaderRoot = styled('div')({
+export const PageHeaderRoot = styled('div')((props) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-})
+    marginBottom: props.theme.spacing.md,
+}))
 
 export const PageHeaderTopSection = styled('div')({
     alignItems: 'center',

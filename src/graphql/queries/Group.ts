@@ -22,3 +22,30 @@ export const GROUP = gql`
     }
     ${GROUP_PAYLOAD}
 `
+
+export const NON_GROUP_MEMBERS = gql`
+    query NonGroupMembers($args: NonGroupMembersArgs!) {
+        nonGroupMembers(args: $args) {
+            id
+            imageURL
+            username
+        }
+    }
+`
+
+export const GROUP_INVITES = gql`
+    query GroupInvites($args: GroupInvitesArgs!) {
+        groupInvites(args: $args) {
+            fromUser {
+                id
+                imageURL
+                username
+            }
+            toUser {
+                id
+                imageURL
+                username
+            }
+        }
+    }
+`

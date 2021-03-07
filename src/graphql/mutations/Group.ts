@@ -23,3 +23,4 @@ export const EDIT_GROUP = gql`
     }
     ${GROUP_PAYLOAD}
 `
+

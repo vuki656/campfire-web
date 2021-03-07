@@ -20,12 +20,12 @@ export const Home: React.FunctionComponent = () => {
         <HomeRoot>
             <HomeHeader>
                 <HomeTitle>
-                    Campfires
+                    Your Campfires
                 </HomeTitle>
                 <HomeAddDialog />
             </HomeHeader>
             <HomeSection>
-                {data?.userGroups
+                {data?.userGroups.length
                     ? (
                         data?.userGroups.map((group) => {
                             return (
@@ -48,7 +48,7 @@ export const Home: React.FunctionComponent = () => {
                 </HomeTitle>
             </HomeHeader>
             <HomeSection>
-                {data?.userGroups
+                {data?.userJoinedGroups.length
                     ? (
                         data?.userJoinedGroups.map((group) => {
                             return (

@@ -50,7 +50,7 @@ export const Post: React.FunctionComponent<PostProps> = (props) => {
     }
 
     const isFavorited = post.favoritedBy?.some((favorite) => {
-        return data.user.id === favorite.userId
+        return data?.user.id === favorite.userId
     })
 
     return (
