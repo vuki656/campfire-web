@@ -106,6 +106,7 @@ type GroupType {
 type InviteType {
   fromUser: UserType!
   toUser: UserType!
+  group: GroupType
 }
 
 input InviteUserInput {
@@ -163,6 +164,7 @@ type Query {
   userJoinedGroups: [GroupType!]!
   groupInvites(args: GroupInvitesArgs!): [InviteType!]!
   favoritePosts: [PostType!]!
+  userInvites: [InviteType!]!
 }
 
 type UserType {

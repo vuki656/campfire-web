@@ -77,6 +77,20 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
                     Favorites
                 </HomeNavHOCListItem>
                 <HomeNavHOCListItem
+                    onClick={() => void router.push('/home/invites')}
+                    startIcon={(
+                        <Image
+                            height={iconSize.height}
+                            quality={100}
+                            src="/icons/invite.svg"
+                            width={iconSize.width}
+                        />
+                    )}
+                    variant="blank"
+                >
+                    Invites
+                </HomeNavHOCListItem>
+                <HomeNavHOCListItem
                     onClick={handleLogout}
                     startIcon={(
                         <Image

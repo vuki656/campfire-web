@@ -91,6 +91,7 @@ export type InviteType = {
   __typename?: 'InviteType';
   fromUser: UserType;
   toUser: UserType;
+  group?: Maybe<GroupType>;
 };
 
 export type InviteUserInput = {
@@ -188,6 +189,7 @@ export type Query = {
   userJoinedGroups: Array<GroupType>;
   groupInvites: Array<InviteType>;
   favoritePosts: Array<PostType>;
+  userInvites: Array<InviteType>;
 };
 
 
@@ -407,6 +409,23 @@ export type GroupInvitesQuery = (
       { __typename?: 'UserType' }
       & Pick<UserType, 'id' | 'imageURL' | 'username'>
     ) }
+  )> }
+);
+
+export type UserInvitesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserInvitesQuery = (
+  { __typename?: 'Query' }
+  & { userInvites: Array<(
+    { __typename?: 'InviteType' }
+    & { fromUser: (
+      { __typename?: 'UserType' }
+      & Pick<UserType, 'id' | 'username'>
+    ), group?: Maybe<(
+      { __typename?: 'GroupType' }
+      & Pick<GroupType, 'id' | 'name'>
+    )> }
   )> }
 );
 
