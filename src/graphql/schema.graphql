@@ -107,6 +107,10 @@ type Mutation {
   favoritePost(input: FavoritePostInput!): Boolean!
 }
 
+input NonGroupMembersArgs {
+  groupId: String!
+}
+
 type PostType {
   id: String!
   description: String
@@ -123,6 +127,7 @@ type PostType {
 
 type Query {
   user: UserType
+  nonGroupMembers(args: NonGroupMembersArgs!): [UserType!]!
   group(args: GroupArgs!): GroupType
   userGroups: [GroupType!]!
   userJoinedGroups: [GroupType!]!
