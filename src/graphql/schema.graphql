@@ -92,6 +92,10 @@ input FavoritePostInput {
   postId: String!
 }
 
+type FavoritePostPayload {
+  post: PostType!
+}
+
 type FavoriteType {
   userId: String!
 }
@@ -134,7 +138,7 @@ type Mutation {
   createGroup(input: CreateGroupInput!): CreateGroupPayload!
   editGroup(input: EditGroupInput!): EditGroupPayload!
   createPost(input: CreatePostInput!): CreatePostPayload!
-  favoritePost(input: FavoritePostInput!): FavoriteType!
+  favoritePost(input: FavoritePostInput!): FavoritePostPayload!
   creteUserInvite(input: CreateInviteInput!): CreateInvitePayload!
   deleteInvite(input: DeleteInviteInput!): DeleteInvitePayload!
 }
@@ -166,7 +170,7 @@ type Query {
   nonGroupMembers(args: NonGroupMembersArgs!): [UserType!]!
   user: UserType
   group(args: GroupArgs!): GroupType
-  userCreatedGroup: [GroupType!]!
+  userCreatedGroups: [GroupType!]!
   userJoinedGroups: [GroupType!]!
   favoritePosts: [PostType!]!
   userInvites: [InviteType!]!

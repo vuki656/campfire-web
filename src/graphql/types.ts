@@ -25,6 +25,17 @@ export type CreateGroupPayload = {
   group: GroupType;
 };
 
+export type CreateInviteInput = {
+  fromUserId: Scalars['String'];
+  toUserId: Scalars['String'];
+  groupId: Scalars['String'];
+};
+
+export type CreateInvitePayload = {
+  __typename?: 'CreateInvitePayload';
+  invite: InviteType;
+};
+
 export type CreatePostInput = {
   description: Scalars['String'];
   link: Scalars['String'];
@@ -38,8 +49,7 @@ export type CreatePostPayload = {
 
 
 export type DeleteInviteInput = {
-  groupId: Scalars['String'];
-  invitedUserId: Scalars['String'];
+  inviteId: Scalars['String'];
 };
 
 export type DeleteInvitePayload = {
@@ -61,6 +71,11 @@ export type FavoritePostInput = {
   postId: Scalars['String'];
 };
 
+export type FavoritePostPayload = {
+  __typename?: 'FavoritePostPayload';
+  post: PostType;
+};
+
 export type FavoriteType = {
   __typename?: 'FavoriteType';
   userId: Scalars['String'];
@@ -79,26 +94,16 @@ export type GroupType = {
   id: Scalars['String'];
   name: Scalars['String'];
   createdAt: Scalars['DateTime'];
-  author: UserType;
+  author?: Maybe<UserType>;
   posts?: Maybe<Array<PostType>>;
 };
 
 export type InviteType = {
   __typename?: 'InviteType';
+  id: Scalars['String'];
   fromUser: UserType;
   toUser: UserType;
   group?: Maybe<GroupType>;
-};
-
-export type InviteUserInput = {
-  fromUserId: Scalars['String'];
-  toUserId: Scalars['String'];
-  groupId: Scalars['String'];
-};
-
-export type InviteUserPayload = {
-  __typename?: 'InviteUserPayload';
-  invite: InviteType;
 };
 
 export type LogInUserInput = {
@@ -108,28 +113,24 @@ export type LogInUserInput = {
 
 export type LogInUserPayload = {
   __typename?: 'LogInUserPayload';
+  userId: Scalars['String'];
   token: Scalars['String'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   logInUser: LogInUserPayload;
-  inviteUser: InviteUserPayload;
   createGroup: CreateGroupPayload;
   editGroup: EditGroupPayload;
-  deleteInvite: DeleteInvitePayload;
   createPost: CreatePostPayload;
-  favoritePost: Scalars['Boolean'];
+  favoritePost: FavoritePostPayload;
+  creteUserInvite: CreateInvitePayload;
+  deleteInvite: DeleteInvitePayload;
 };
 
 
 export type MutationLogInUserArgs = {
   input: LogInUserInput;
-};
-
-
-export type MutationInviteUserArgs = {
-  input: InviteUserInput;
 };
 
 
@@ -143,11 +144,6 @@ export type MutationEditGroupArgs = {
 };
 
 
-export type MutationDeleteInviteArgs = {
-  input: DeleteInviteInput;
-};
-
-
 export type MutationCreatePostArgs = {
   input: CreatePostInput;
 };
@@ -157,35 +153,51 @@ export type MutationFavoritePostArgs = {
   input: FavoritePostInput;
 };
 
+
+export type MutationCreteUserInviteArgs = {
+  input: CreateInviteInput;
+};
+
+
+export type MutationDeleteInviteArgs = {
+  input: DeleteInviteInput;
+};
+
 export type NonGroupMembersArgs = {
   groupId: Scalars['String'];
+};
+
+export type PostMetadataType = {
+  __typename?: 'PostMetadataType';
+  id: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
+  siteName?: Maybe<Scalars['String']>;
+  imageLink?: Maybe<Scalars['String']>;
+  faviconLink?: Maybe<Scalars['String']>;
 };
 
 export type PostType = {
   __typename?: 'PostType';
   id: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  createdAt: Scalars['DateTime'];
   link: Scalars['String'];
-  title?: Maybe<Scalars['String']>;
-  siteName?: Maybe<Scalars['String']>;
-  imageLink?: Maybe<Scalars['String']>;
-  faviconLink?: Maybe<Scalars['String']>;
+  createdAt: Scalars['DateTime'];
   author: UserType;
+  metadata?: Maybe<PostMetadataType>;
   favoritedBy?: Maybe<Array<FavoriteType>>;
   group?: Maybe<GroupType>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  user?: Maybe<UserType>;
   nonGroupMembers: Array<UserType>;
+  user?: Maybe<UserType>;
   group?: Maybe<GroupType>;
-  userGroups: Array<GroupType>;
+  userCreatedGroups: Array<GroupType>;
   userJoinedGroups: Array<GroupType>;
-  groupInvites: Array<InviteType>;
   favoritePosts: Array<PostType>;
   userInvites: Array<InviteType>;
+  groupInvites: Array<InviteType>;
 };
 
 
@@ -216,16 +228,19 @@ export type GroupPayloadFragment = (
   & { posts?: Maybe<Array<(
     { __typename?: 'PostType' }
     & PostPayloadFragment
-  )>>, author: (
+  )>>, author?: Maybe<(
     { __typename?: 'UserType' }
     & Pick<UserType, 'id' | 'username' | 'imageURL'>
-  ) }
+  )> }
 );
 
 export type PostPayloadFragment = (
   { __typename?: 'PostType' }
-  & Pick<PostType, 'id' | 'description' | 'createdAt' | 'title' | 'siteName' | 'imageLink' | 'faviconLink' | 'link'>
-  & { favoritedBy?: Maybe<Array<(
+  & Pick<PostType, 'id' | 'description' | 'createdAt' | 'link'>
+  & { metadata?: Maybe<(
+    { __typename?: 'PostMetadataType' }
+    & Pick<PostMetadataType, 'title' | 'siteName' | 'imageLink' | 'faviconLink'>
+  )>, favoritedBy?: Maybe<Array<(
     { __typename?: 'FavoriteType' }
     & Pick<FavoriteType, 'userId'>
   )>>, author: (
@@ -288,6 +303,28 @@ export type DeleteInviteMutation = (
   ) }
 );
 
+export type CreateInviteMutationVariables = Exact<{
+  input: CreateInviteInput;
+}>;
+
+
+export type CreateInviteMutation = (
+  { __typename?: 'Mutation' }
+  & { creteUserInvite: (
+    { __typename?: 'CreateInvitePayload' }
+    & { invite: (
+      { __typename?: 'InviteType' }
+      & { fromUser: (
+        { __typename?: 'UserType' }
+        & Pick<UserType, 'id' | 'username' | 'imageURL'>
+      ), toUser: (
+        { __typename?: 'UserType' }
+        & Pick<UserType, 'id' | 'username' | 'imageURL'>
+      ) }
+    ) }
+  ) }
+);
+
 export type CreatePostMutationVariables = Exact<{
   input: CreatePostInput;
 }>;
@@ -311,7 +348,13 @@ export type FavoritePostMutationVariables = Exact<{
 
 export type FavoritePostMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'favoritePost'>
+  & { favoritePost: (
+    { __typename?: 'FavoritePostPayload' }
+    & { post: (
+      { __typename?: 'PostType' }
+      & PostPayloadFragment
+    ) }
+  ) }
 );
 
 export type LogInUserMutationVariables = Exact<{
@@ -327,39 +370,25 @@ export type LogInUserMutation = (
   ) }
 );
 
-export type InviteUserMutationVariables = Exact<{
-  input: InviteUserInput;
-}>;
-
-
-export type InviteUserMutation = (
-  { __typename?: 'Mutation' }
-  & { inviteUser: (
-    { __typename?: 'InviteUserPayload' }
-    & { invite: (
-      { __typename?: 'InviteType' }
-      & { fromUser: (
-        { __typename?: 'UserType' }
-        & Pick<UserType, 'id' | 'username' | 'imageURL'>
-      ), toUser: (
-        { __typename?: 'UserType' }
-        & Pick<UserType, 'id' | 'username' | 'imageURL'>
-      ) }
-    ) }
-  ) }
-);
-
 export type GroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GroupsQuery = (
   { __typename?: 'Query' }
-  & { userGroups: Array<(
+  & { userCreatedGroups: Array<(
     { __typename?: 'GroupType' }
-    & GroupPayloadFragment
+    & Pick<GroupType, 'id' | 'name'>
+    & { author?: Maybe<(
+      { __typename?: 'UserType' }
+      & Pick<UserType, 'id' | 'username' | 'imageURL'>
+    )> }
   )>, userJoinedGroups: Array<(
     { __typename?: 'GroupType' }
-    & GroupPayloadFragment
+    & Pick<GroupType, 'id' | 'name'>
+    & { author?: Maybe<(
+      { __typename?: 'UserType' }
+      & Pick<UserType, 'id' | 'username' | 'imageURL'>
+    )> }
   )> }
 );
 

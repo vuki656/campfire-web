@@ -6,10 +6,10 @@ import { Button } from '@dvukovic/dujo-ui'
 import { useRouter } from 'next/dist/client/router'
 import React from 'react'
 
-import { PageHeader } from '../../components/PageHeader/PageHeader'
+import { PageHeader } from '../../components/SectionHeader/PageHeader'
 import {
     DELETE_INVITE,
-    INVITE_USER,
+    CREATE_INVITE,
 } from '../../graphql/mutations'
 import {
     GROUP_INVITES,
@@ -42,7 +42,7 @@ export const Invites: React.FunctionComponent = () => {
 
     const groupId = router.query.groupId as string
 
-    const [inviteUserMutation] = useMutation<InviteUserMutation, InviteUserMutationVariables>(INVITE_USER)
+    const [inviteUserMutation] = useMutation<InviteUserMutation, InviteUserMutationVariables>(CREATE_INVITE)
     const [deleteInviteMutation] = useMutation<DeleteInviteMutation, DeleteInviteMutationVariables>(DELETE_INVITE)
 
     const { data: userData } = useQuery<UserQuery>(USER)

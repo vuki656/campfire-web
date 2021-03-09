@@ -14,3 +14,22 @@ export const DELETE_INVITE = gql`
         }
     }
 `
+
+export const CREATE_INVITE = gql`
+    mutation CreateInvite($input: CreateInviteInput!) {
+        creteUserInvite(input: $input) {
+            invite {
+                fromUser {
+                    id
+                    username
+                    imageURL
+                }
+                toUser {
+                    id
+                    username
+                    imageURL
+                }
+            }
+        }
+    }
+`

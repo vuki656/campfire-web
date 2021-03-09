@@ -5,10 +5,12 @@ export const POST_PAYLOAD = gql`
         id
         description
         createdAt
-        title
-        siteName
-        imageLink
-        faviconLink
+        metadata {
+            title
+            siteName
+            imageLink
+            faviconLink
+        }
         link
         favoritedBy {
             userId

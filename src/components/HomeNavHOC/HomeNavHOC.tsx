@@ -20,7 +20,7 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
     const router = useRouter()
     const cookies = useCookies()
 
-    const { data: groupData } = useQuery<GroupQuery, GroupQueryVariables>(GROUP, {
+    const { data } = useQuery<GroupQuery, GroupQueryVariables>(GROUP, {
         fetchPolicy: 'network-only',
         variables: {
             args: {
@@ -36,7 +36,7 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
         void router.push('/')
     }
 
-    const isUserGroupOwner = cookies.userId === groupData?.group.author.id
+    const isUserGroupOwner = cookies.userId === data?.group.author.id
 
     return (
         <HomeNavHOCRoot>

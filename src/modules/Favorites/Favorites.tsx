@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import React from 'react'
 
-import { PageHeader } from '../../components/PageHeader/PageHeader'
+import { PageHeader } from '../../components/SectionHeader/PageHeader'
 import { Post } from '../../components/Post'
 import { FAVORITE_POSTS } from '../../graphql/queries/Post'
 import type { FavoritePostsQuery } from '../../graphql/types'

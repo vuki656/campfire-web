@@ -4,14 +4,25 @@ import { GROUP_PAYLOAD } from '../fragments'
 
 export const GROUPS = gql`
     query Groups {
-        userGroups {
-            ...GroupPayload
+        userCreatedGroups {
+            id
+            name
+            author {
+                id
+                username
+                imageURL
+            }
         }
         userJoinedGroups {
-            ...GroupPayload
+            id
+            name
+            author {
+                id
+                username
+                imageURL
+            }
         }
     }
-    ${GROUP_PAYLOAD}
 `
 
 export const GROUP = gql`
