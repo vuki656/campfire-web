@@ -1,7 +1,4 @@
-import {
-    useMutation,
-    useQuery,
-} from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { Button } from '@dvukovic/dujo-ui'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/dist/client/router'
@@ -9,12 +6,11 @@ import Image from 'next/image'
 import React from 'react'
 
 import { FAVORITE_POST } from '../../graphql/mutations/Post'
-import { USER } from '../../graphql/queries'
 import type {
     FavoritePostMutation,
     FavoritePostMutationVariables,
-    UserQuery,
 } from '../../graphql/types'
+import { useCookies } from '../../lib/useCookies'
 
 import {
     PostActions,
@@ -32,9 +28,8 @@ import type { PostProps } from './Post.types'
 export const Post: React.FunctionComponent<PostProps> = (props) => {
     const { post } = props
 
-    const { data } = useQuery<UserQuery>(USER)
-
     const router = useRouter()
+    const cookies = useCookies()
 
     const [favoritePostMutation] = useMutation<FavoritePostMutation, FavoritePostMutationVariables>(FAVORITE_POST)
 
@@ -50,7 +45,7 @@ export const Post: React.FunctionComponent<PostProps> = (props) => {
     }
 
     const isFavorited = post.favoritedBy?.some((favorite) => {
-        return data?.user.id === favorite.userId
+        return cookies.userId === favorite.userId
     })
 
     return (
@@ -77,9 +72,9 @@ export const Post: React.FunctionComponent<PostProps> = (props) => {
                     )
                     : null}
                 <PostImage
-                    alt={post.title}
+                    alt={post.metadata?.title}
                     loading="lazy"
-                    src={post.imageLink}
+                    src={post.metadata?.imageLink}
                 />
                 <PostActions>
                     <Button
@@ -100,7 +95,7 @@ export const Post: React.FunctionComponent<PostProps> = (props) => {
                     >
                         {post.favoritedBy?.length}
                         {' '}
-                        Favourite
+                        Favorite
                     </Button>
                     <Button
                         onClick={() => {

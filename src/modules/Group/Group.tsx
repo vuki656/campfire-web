@@ -33,12 +33,16 @@ export const Group: React.FunctionComponent = () => {
         <GroupRoot>
             <GroupHeader>
                 <GroupTitle>
-                    {data?.group.name}
+                    {data?.group?.name}
                 </GroupTitle>
                 <GroupAddDialog />
             </GroupHeader>
             <GroupPosts>
                 {data?.group?.posts?.map((post) => {
+                    if (!post) {
+                        return null
+                    }
+
                     return (
                         <Post
                             key={post.id}

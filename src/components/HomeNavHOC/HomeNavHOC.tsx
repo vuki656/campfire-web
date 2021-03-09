@@ -34,7 +34,7 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
         void router.push('/')
     }
 
-    const isUserGroupOwner = cookies.userId === data?.group.author.id
+    const isUserGroupOwner = cookies.userId === data?.group?.author?.id
 
     return (
         <HomeNavHOCRoot>

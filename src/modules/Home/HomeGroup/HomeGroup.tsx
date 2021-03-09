@@ -35,7 +35,7 @@ export const HomeGroup: React.FunctionComponent<HomeGroupProps> = (props) => {
                 <HomeGroupTitle>
                     {group.name}
                 </HomeGroupTitle>
-                {group.author.id === data?.user?.id
+                {group?.author?.id === data?.user?.id
                     ? (
                         <HomeGroupActions>
                             <HomeEditDialog group={group} />
@@ -44,9 +44,9 @@ export const HomeGroup: React.FunctionComponent<HomeGroupProps> = (props) => {
                     : null}
             </HomeGroupHeader>
             <HomeGroupAuthor>
-                Author:
+                Created by:
                 {' '}
-                {group.author.username}
+                {group?.author?.username}
             </HomeGroupAuthor>
         </HomeGroupRoot>
     )

@@ -8,8 +8,8 @@ import React from 'react'
 
 import { PageHeader } from '../../components/SectionHeader/PageHeader'
 import {
-    DELETE_INVITE,
     CREATE_INVITE,
+    DELETE_INVITE,
 } from '../../graphql/mutations'
 import {
     GROUP_INVITES,
@@ -71,7 +71,7 @@ export const Invites: React.FunctionComponent = () => {
             refetchQueries: ['NonGroupMembers', 'GroupInvites'],
             variables: {
                 input: {
-                    fromUserId: userData?.user.id,
+                    fromUserId: userData?.user?.id,
                     groupId: groupId,
                     toUserId: toUserId,
                 },
