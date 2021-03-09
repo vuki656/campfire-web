@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client'
-import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -30,8 +29,7 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
     })
 
     const handleLogout = () => {
-        Cookies.remove('token')
-        Cookies.remove('userId')
+        cookies.actions.removeAll()
 
         void router.push('/')
     }

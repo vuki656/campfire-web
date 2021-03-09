@@ -366,7 +366,7 @@ export type LogInUserMutation = (
   { __typename?: 'Mutation' }
   & { logInUser: (
     { __typename?: 'LogInUserPayload' }
-    & Pick<LogInUserPayload, 'token'>
+    & Pick<LogInUserPayload, 'token' | 'userId'>
   ) }
 );
 

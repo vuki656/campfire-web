@@ -4,8 +4,7 @@ export const LOG_IN_USER = gql`
     mutation LogInUser($input: LogInUserInput!) {
         logInUser(input: $input) {
             token
+            userId
         }
     }
 `
-
-
