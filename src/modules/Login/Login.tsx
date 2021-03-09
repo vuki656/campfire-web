@@ -58,8 +58,10 @@ export const Login: React.FunctionComponent = () => {
             })
                 .then((response) => {
                     const token = response?.data?.logInUser.token ?? ''
+                    const userId = response?.data?.logInUser.userId ?? ''
 
                     Cookies.set('token', token)
+                    Cookies.set('userId', userId)
                     void router.push('/home')
                 })
                 .catch((error: ApolloError) => {

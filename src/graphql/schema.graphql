@@ -46,6 +46,16 @@ type CreateGroupPayload {
   group: GroupType!
 }
 
+input CreateInviteInput {
+  fromUserId: String!
+  toUserId: String!
+  groupId: String!
+}
+
+type CreateInvitePayload {
+  invite: InviteType!
+}
+
 input CreatePostInput {
   description: String!
   link: String!
@@ -62,8 +72,7 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 input DeleteInviteInput {
-  groupId: String!
-  invitedUserId: String!
+  inviteId: String!
 }
 
 type DeleteInvitePayload {
@@ -99,24 +108,15 @@ type GroupType {
   id: String!
   name: String!
   createdAt: DateTime!
-  author: UserType!
+  author: UserType
   posts: [PostType!]
 }
 
 type InviteType {
+  id: String!
   fromUser: UserType!
   toUser: UserType!
   group: GroupType
-}
-
-input InviteUserInput {
-  fromUserId: String!
-  toUserId: String!
-  groupId: String!
-}
-
-type InviteUserPayload {
-  invite: InviteType!
 }
 
 input LogInUserInput {
@@ -125,46 +125,52 @@ input LogInUserInput {
 }
 
 type LogInUserPayload {
+  userId: String!
   token: String!
 }
 
 type Mutation {
   logInUser(input: LogInUserInput!): LogInUserPayload!
-  inviteUser(input: InviteUserInput!): InviteUserPayload!
   createGroup(input: CreateGroupInput!): CreateGroupPayload!
   editGroup(input: EditGroupInput!): EditGroupPayload!
-  deleteInvite(input: DeleteInviteInput!): DeleteInvitePayload!
   createPost(input: CreatePostInput!): CreatePostPayload!
-  favoritePost(input: FavoritePostInput!): Boolean!
+  favoritePost(input: FavoritePostInput!): FavoriteType!
+  creteUserInvite(input: CreateInviteInput!): CreateInvitePayload!
+  deleteInvite(input: DeleteInviteInput!): DeleteInvitePayload!
 }
 
 input NonGroupMembersArgs {
   groupId: String!
 }
 
-type PostType {
+type PostMetadataType {
   id: String!
-  description: String
-  createdAt: DateTime!
-  link: String!
   title: String
   siteName: String
   imageLink: String
   faviconLink: String
+}
+
+type PostType {
+  id: String!
+  description: String
+  link: String!
+  createdAt: DateTime!
   author: UserType!
+  metadata: PostMetadataType
   favoritedBy: [FavoriteType!]
   group: GroupType
 }
 
 type Query {
-  user: UserType
   nonGroupMembers(args: NonGroupMembersArgs!): [UserType!]!
+  user: UserType
   group(args: GroupArgs!): GroupType
-  userGroups: [GroupType!]!
+  userCreatedGroup: [GroupType!]!
   userJoinedGroups: [GroupType!]!
-  groupInvites(args: GroupInvitesArgs!): [InviteType!]!
   favoritePosts: [PostType!]!
   userInvites: [InviteType!]!
+  groupInvites(args: GroupInvitesArgs!): [InviteType!]!
 }
 
 type UserType {

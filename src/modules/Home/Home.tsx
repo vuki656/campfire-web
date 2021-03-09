@@ -38,7 +38,7 @@ export const Home: React.FunctionComponent = () => {
                     )
                     : (
                         <p>
-                            Looks like you haven't created any campfires yet. Go make one dude.
+                            Looks like you haven't created any campfires yet. Why not make one.
                         </p>
                     )}
             </HomeSection>

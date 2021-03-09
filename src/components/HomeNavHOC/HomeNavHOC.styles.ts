@@ -9,8 +9,6 @@ export const HomeNavHOCRoot = styled('div')((props) => ({
     paddingTop: props.theme.spacing.lg,
 }))
 
-export const HomeNavHOCList = styled('div')((props) => ({}))
-
 export const HomeNavHOCListItem = styled(Button)((props) => ({
     color: '#6e6d7a',
     marginBottom: props.theme.spacing.xs,

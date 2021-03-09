@@ -1,7 +1,3 @@
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-eslint-disable-next-line unicorn/no-abusive-eslint-disable
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
