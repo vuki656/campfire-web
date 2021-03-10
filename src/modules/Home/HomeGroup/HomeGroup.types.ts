@@ -5,7 +5,7 @@ export type GroupType = {
         id: string
         username: string
         imageURL: string
-    }
+    } | null
 }
 
 export type HomeGroupProps = {

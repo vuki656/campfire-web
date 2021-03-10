@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 
-import { PageHeader } from '../../components/PageHeader'
+import { SectionHeader } from '../../components'
 import { USER_INVITES } from '../../graphql/queries'
 import type { UserInvitesQuery } from '../../graphql/types'
 
@@ -11,7 +11,7 @@ export const UserInvites: React.FunctionComponent = () => {
 
     return (
         <div>
-            <PageHeader title="Invites" />
+            <SectionHeader title="Invites" />
             <UserInvitesList>
                 Invites
                 {/* {data?.userInvites.map((invite) => { */}

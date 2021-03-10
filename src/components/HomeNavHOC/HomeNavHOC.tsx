@@ -19,11 +19,14 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
     const router = useRouter()
     const cookies = useCookies()
 
+    const groupId = router.query.groupId as string
+
     const { data } = useQuery<GroupQuery, GroupQueryVariables>(GROUP, {
         fetchPolicy: 'network-only',
+        skip: !groupId,
         variables: {
             args: {
-                groupId: router.query.groupId as string,
+                groupId: groupId,
             },
         },
     })

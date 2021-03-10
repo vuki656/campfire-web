@@ -16,13 +16,13 @@ export const Home: React.FunctionComponent = () => {
             <HomeSection
                 actions={<HomeAddDialog />}
                 fallbackText="Looks like you haven't created any campfires yet. Why not make one."
-                groups={data?.userCreatedGroups}
+                groups={data?.userCreatedGroups ?? []}
                 title="Your Campfires"
             />
             <HomeSection
                 fallbackText="You haven't joined any campfires yet."
-                groups={data?.userJoinedGroups}
-                title="Your Campfires"
+                groups={data?.userJoinedGroups ?? []}
+                title="Joined Campfires"
             />
         </HomeRoot>
     )

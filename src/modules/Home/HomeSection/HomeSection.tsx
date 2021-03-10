@@ -18,7 +18,7 @@ export const HomeSection: React.FunctionComponent<HomeSectionProps> = (props) =>
                 actions={actions}
                 title={title}
             />
-            {groups?.length
+            {groups.length
                 ? groups.map((group) => {
                     return (
                         <HomeGroup

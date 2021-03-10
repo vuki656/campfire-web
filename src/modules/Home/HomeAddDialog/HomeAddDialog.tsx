@@ -27,7 +27,10 @@ const ValidationSchema = Yup.object().shape({
 export const HomeAddDialog: React.FunctionComponent = () => {
     const [isOpen, toggleOpen] = useToggle(false)
 
-    const [createGroupMutation] = useMutation<CreateGroupMutation, CreateGroupMutationVariables>(CREATE_GROUP)
+    const [createGroupMutation, { loading }] = useMutation<
+        CreateGroupMutation,
+        CreateGroupMutationVariables
+    >(CREATE_GROUP)
 
     const {
         errors,
@@ -90,6 +93,7 @@ export const HomeAddDialog: React.FunctionComponent = () => {
                             Cancel
                         </Button>
                         <Button
+                            loading={loading}
                             type="submit"
                             variant="outlined"
                         >

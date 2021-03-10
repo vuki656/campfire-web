@@ -7,7 +7,6 @@ import { useRouter } from 'next/dist/client/router'
 import React from 'react'
 import {SectionHeader} from '../../components'
 
-import { PageHeader } from '../../components/SectionHeader/PageHeader'
 import {
     CREATE_INVITE,
     DELETE_INVITE,
@@ -28,6 +27,7 @@ import type {
     NonGroupMembersQueryVariables,
     UserQuery,
 } from '../../graphql/types'
+import {useCookies} from '../../lib/useCookies'
 
 import {
     GroupInvitesFromUser,
@@ -40,13 +40,12 @@ import {
 
 export const Invites: React.FunctionComponent = () => {
     const router = useRouter()
+    const cookies = useCookies()
 
     const groupId = router.query.groupId as string
 
     const [inviteUserMutation] = useMutation<InviteUserMutation, InviteUserMutationVariables>(CREATE_INVITE)
     const [deleteInviteMutation] = useMutation<DeleteInviteMutation, DeleteInviteMutationVariables>(DELETE_INVITE)
-
-    const { data: userData } = useQuery<UserQuery>(USER)
 
     const { data: groupInvitesData } = useQuery<GroupInvitesQuery, GroupInvitesQueryVariables>(GROUP_INVITES, {
         variables: {
@@ -72,7 +71,7 @@ export const Invites: React.FunctionComponent = () => {
             refetchQueries: ['NonGroupMembers', 'GroupInvites'],
             variables: {
                 input: {
-                    fromUserId: userData?.user?.id,
+                    fromUserId: cookies.userId,
                     groupId: groupId,
                     toUserId: toUserId,
                 },
@@ -85,8 +84,7 @@ export const Invites: React.FunctionComponent = () => {
             refetchQueries: ['NonGroupMembers', 'GroupInvites'],
             variables: {
                 input: {
-                    groupId: groupId,
-                    invitedUserId: toUserId,
+
                 },
             },
         })
