@@ -5,6 +5,7 @@ import {
 import { Button } from '@dvukovic/dujo-ui'
 import { useRouter } from 'next/dist/client/router'
 import React from 'react'
+import {SectionHeader} from '../../components'
 
 import { PageHeader } from '../../components/SectionHeader/PageHeader'
 import {
@@ -29,13 +30,13 @@ import type {
 } from '../../graphql/types'
 
 import {
-    InvitesFromUser,
-    InvitesListItemDetails,
-    InvitesToUsername,
-    InvitesUser,
-    InvitesUserDetails,
-    InvitesUserImage,
-} from './Invites.styles'
+    GroupInvitesFromUser,
+    GroupInvitesListItemDetails,
+    GroupInvitesToUsername,
+    GroupInvitesUser,
+    GroupInvitesUserDetails,
+    GroupInvitesUserImage,
+} from './GroupInvites.styles'
 
 export const Invites: React.FunctionComponent = () => {
     const router = useRouter()
@@ -93,56 +94,55 @@ export const Invites: React.FunctionComponent = () => {
 
     return (
         <div>
-            <PageHeader title="Invites" />
+            <SectionHeader title="Invites" />
             {nonGroupMembersData?.nonGroupMembers.map((user) => {
                 return (
-                    <InvitesUser key={user.id}>
-                        <InvitesUserDetails>
-                            <InvitesUserImage
+                    <GroupInvitesUser key={user.id}>
+                        <GroupInvitesUserDetails>
+                            <GroupInvitesUserImage
                                 height={50}
                                 src={user.imageURL}
                                 width={50}
                             />
                             {user.username}
-                        </InvitesUserDetails>
+                        </GroupInvitesUserDetails>
                         <Button
                             onClick={handleInvite(user.id)}
                             variant="outlined"
                         >
                             Invite
                         </Button>
-                    </InvitesUser>
+                    </GroupInvitesUser>
                 )
             })}
-            <PageHeader title="Sent Invites">
+            <SectionHeader title="Sent Invites">
                 {groupInvitesData?.groupInvites.map((invite) => {
                     return (
-                        <InvitesUser key={invite.toUser.id + invite.fromUser.id}>
-                            <InvitesListItemDetails>
-                                <InvitesUserImage
+                        <GroupInvitesUser key={invite.toUser.id + invite.fromUser.id}>
+                            <GroupInvitesListItemDetails>
+                                <GroupInvitesUserImage
                                     height={50}
                                     src={invite.toUser.imageURL}
                                     width={50}
                                 />
-                                <InvitesToUsername>
+                                <GroupInvitesToUsername>
                                     {invite.toUser.username}
-                                </InvitesToUsername>
-                                <InvitesFromUser>
+                                </GroupInvitesToUsername>
+                                <GroupInvitesFromUser>
                                     Invited by:
                                     {' '}
                                     {invite.fromUser.username}
-                                </InvitesFromUser>
-                            </InvitesListItemDetails>
+                                </GroupInvitesFromUser>
+                            </GroupInvitesListItemDetails>
                             <Button
                                 onClick={handleInviteCancel(invite.toUser.id)}
                                 variant="outlined"
                             >
                                 Cancel
                             </Button>
-                        </InvitesUser>
+                        </GroupInvitesUser>
                     )
                 })}
-            </PageHeader>
         </div>
     )
 }
