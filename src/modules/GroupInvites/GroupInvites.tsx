@@ -7,6 +7,7 @@ import { useRouter } from 'next/dist/client/router'
 import React from 'react'
 
 import { SectionHeader } from '../../components'
+import { Invite } from '../../components/Invite'
 import {
     CREATE_INVITE,
     DELETE_INVITE,
@@ -21,11 +22,6 @@ import type {
     GroupInvitesQueryVariables,
 } from '../../graphql/types'
 import { useCookies } from '../../lib/useCookies'
-
-import {
-    GroupInvitesUser,
-    GroupInvitesUserImage,
-} from './GroupInvites.styles'
 
 export const Invites: React.FunctionComponent = () => {
     const router = useRouter()
@@ -61,7 +57,7 @@ export const Invites: React.FunctionComponent = () => {
         })
     }
 
-    const handleInviteCancel = (inviteId: string) => () => {
+    const handleInviteDelete = (inviteId: string) => () => {
         void deleteInviteMutation({
             refetchQueries: ['GroupInvites'],
             variables: {
@@ -77,44 +73,39 @@ export const Invites: React.FunctionComponent = () => {
             <SectionHeader title="Invite Members" />
             {data?.nonGroupMembers.map((user) => {
                 return (
-                    <GroupInvitesUser key={user.id}>
-                        <GroupInvitesUserImage
-                            height={50}
-                            src={user.imageURL}
-                            width={50}
-                        />
-                        {user.username}
-                        <Button
-                            onClick={handleInvite(user.id)}
-                            variant="outlined"
-                        >
-                            Invite
-                        </Button>
-                    </GroupInvitesUser>
+                    <Invite
+                        action={(
+                            <Button
+                                onClick={handleInvite(user.id)}
+                                variant="outlined"
+                            >
+                                Invite
+                            </Button>
+                        )}
+                        key={user.id}
+                        user={user}
+                    />
                 )
             })}
             <SectionHeader
-                title="Invited Members"
+                title="Invited Users"
                 topSpacing={true}
             />
             {data?.groupInvites.map((invite) => {
-                const { id, imageURL, username } = invite.toUser
-
                 return (
-                    <GroupInvitesUser key={id}>
-                        <GroupInvitesUserImage
-                            height={50}
-                            src={imageURL}
-                            width={50}
-                        />
-                        {username}
-                        <Button
-                            onClick={handleInviteCancel(invite.id)}
-                            variant="outlined"
-                        >
-                            Delete
-                        </Button>
-                    </GroupInvitesUser>
+                    <Invite
+                        action={(
+                            <Button
+                                onClick={handleInviteDelete(invite.id)}
+                                variant="outlined"
+                            >
+                                Delete
+                            </Button>
+                        )}
+                        key={invite.id}
+                        message={`Invited by ${invite.fromUser.username}`}
+                        user={invite.toUser}
+                    />
                 )
             })}
         </div>

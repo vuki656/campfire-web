@@ -64,7 +64,7 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
                 </HomeNavHOCList>
                 {isUserGroupOwner
                     ? (
-                        <HomeNavHOCList title="Campfire Settings">
+                        <HomeNavHOCList title="Settings">
                             <HomeNavHOCListItem
                                 iconName="people"
                                 label="Members"
