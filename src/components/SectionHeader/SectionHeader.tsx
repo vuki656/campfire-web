@@ -13,10 +13,11 @@ export const SectionHeader: React.FunctionComponent<SectionHeaderProps> = (props
         actions,
         children,
         title,
+        topSpacing = false,
     } = props
 
     return (
-        <SectionHeaderRoot>
+        <SectionHeaderRoot topSpacing={topSpacing}>
             <SectionHeaderTopSection>
                 <SectionHeaderTitle>
                     {title}

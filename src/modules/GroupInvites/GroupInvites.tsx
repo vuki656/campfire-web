@@ -5,36 +5,25 @@ import {
 import { Button } from '@dvukovic/dujo-ui'
 import { useRouter } from 'next/dist/client/router'
 import React from 'react'
-import {SectionHeader} from '../../components'
 
+import { SectionHeader } from '../../components'
 import {
     CREATE_INVITE,
     DELETE_INVITE,
 } from '../../graphql/mutations'
-import {
-    GROUP_INVITES,
-    NON_GROUP_MEMBERS,
-    USER,
-} from '../../graphql/queries'
+import { GROUP_INVITES } from '../../graphql/queries'
 import type {
+    CreateInviteMutation,
+    CreateInviteMutationVariables,
     DeleteInviteMutation,
     DeleteInviteMutationVariables,
     GroupInvitesQuery,
     GroupInvitesQueryVariables,
-    InviteUserMutation,
-    InviteUserMutationVariables,
-    NonGroupMembersQuery,
-    NonGroupMembersQueryVariables,
-    UserQuery,
 } from '../../graphql/types'
-import {useCookies} from '../../lib/useCookies'
+import { useCookies } from '../../lib/useCookies'
 
 import {
-    GroupInvitesFromUser,
-    GroupInvitesListItemDetails,
-    GroupInvitesToUsername,
     GroupInvitesUser,
-    GroupInvitesUserDetails,
     GroupInvitesUserImage,
 } from './GroupInvites.styles'
 
@@ -44,31 +33,24 @@ export const Invites: React.FunctionComponent = () => {
 
     const groupId = router.query.groupId as string
 
-    const [inviteUserMutation] = useMutation<InviteUserMutation, InviteUserMutationVariables>(CREATE_INVITE)
+    const [inviteUserMutation] = useMutation<CreateInviteMutation, CreateInviteMutationVariables>(CREATE_INVITE)
+
     const [deleteInviteMutation] = useMutation<DeleteInviteMutation, DeleteInviteMutationVariables>(DELETE_INVITE)
 
-    const { data: groupInvitesData } = useQuery<GroupInvitesQuery, GroupInvitesQueryVariables>(GROUP_INVITES, {
+    const { data } = useQuery<GroupInvitesQuery, GroupInvitesQueryVariables>(GROUP_INVITES, {
         variables: {
             args: {
-                groupId: router.query.groupId as string,
+                groupId: groupId,
             },
-        },
-    })
-
-    const { data: nonGroupMembersData } = useQuery<
-        NonGroupMembersQuery,
-        NonGroupMembersQueryVariables
-    >(NON_GROUP_MEMBERS, {
-        variables: {
-            args: {
-                groupId: router.query.groupId as string,
+            nonGroupMembersArgs: {
+                groupId: groupId,
             },
         },
     })
 
     const handleInvite = (toUserId: string) => () => {
         void inviteUserMutation({
-            refetchQueries: ['NonGroupMembers', 'GroupInvites'],
+            refetchQueries: ['GroupInvites'],
             variables: {
                 input: {
                     fromUserId: cookies.userId,
@@ -79,12 +61,12 @@ export const Invites: React.FunctionComponent = () => {
         })
     }
 
-    const handleInviteCancel = (toUserId: string) => () => {
+    const handleInviteCancel = (inviteId: string) => () => {
         void deleteInviteMutation({
-            refetchQueries: ['NonGroupMembers', 'GroupInvites'],
+            refetchQueries: ['GroupInvites'],
             variables: {
                 input: {
-
+                    inviteId: inviteId,
                 },
             },
         })
@@ -92,18 +74,16 @@ export const Invites: React.FunctionComponent = () => {
 
     return (
         <div>
-            <SectionHeader title="Invites" />
-            {nonGroupMembersData?.nonGroupMembers.map((user) => {
+            <SectionHeader title="Invite Members" />
+            {data?.nonGroupMembers.map((user) => {
                 return (
                     <GroupInvitesUser key={user.id}>
-                        <GroupInvitesUserDetails>
-                            <GroupInvitesUserImage
-                                height={50}
-                                src={user.imageURL}
-                                width={50}
-                            />
-                            {user.username}
-                        </GroupInvitesUserDetails>
+                        <GroupInvitesUserImage
+                            height={50}
+                            src={user.imageURL}
+                            width={50}
+                        />
+                        {user.username}
                         <Button
                             onClick={handleInvite(user.id)}
                             variant="outlined"
@@ -113,34 +93,30 @@ export const Invites: React.FunctionComponent = () => {
                     </GroupInvitesUser>
                 )
             })}
-            <SectionHeader title="Sent Invites">
-                {groupInvitesData?.groupInvites.map((invite) => {
-                    return (
-                        <GroupInvitesUser key={invite.toUser.id + invite.fromUser.id}>
-                            <GroupInvitesListItemDetails>
-                                <GroupInvitesUserImage
-                                    height={50}
-                                    src={invite.toUser.imageURL}
-                                    width={50}
-                                />
-                                <GroupInvitesToUsername>
-                                    {invite.toUser.username}
-                                </GroupInvitesToUsername>
-                                <GroupInvitesFromUser>
-                                    Invited by:
-                                    {' '}
-                                    {invite.fromUser.username}
-                                </GroupInvitesFromUser>
-                            </GroupInvitesListItemDetails>
-                            <Button
-                                onClick={handleInviteCancel(invite.toUser.id)}
-                                variant="outlined"
-                            >
-                                Cancel
-                            </Button>
-                        </GroupInvitesUser>
-                    )
-                })}
+            <SectionHeader
+                title="Invited Members"
+                topSpacing={true}
+            />
+            {data?.groupInvites.map((invite) => {
+                const { id, imageURL, username } = invite.toUser
+
+                return (
+                    <GroupInvitesUser key={id}>
+                        <GroupInvitesUserImage
+                            height={50}
+                            src={imageURL}
+                            width={50}
+                        />
+                        {username}
+                        <Button
+                            onClick={handleInviteCancel(invite.id)}
+                            variant="outlined"
+                        >
+                            Delete
+                        </Button>
+                    </GroupInvitesUser>
+                )
+            })}
         </div>
     )
 }

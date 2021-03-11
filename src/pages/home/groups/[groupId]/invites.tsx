@@ -4,6 +4,7 @@ import React from 'react'
 
 import { HomeNavHOC } from '../../../../components/HomeNavHOC'
 import { NavigationBar } from '../../../../components/NavigationBar'
+import { Invites } from '../../../../modules/GroupInvites'
 
 const InvitesPage: NextPage = () => {
     return (
@@ -15,7 +16,7 @@ const InvitesPage: NextPage = () => {
             </NextHead>
             <NavigationBar />
             <HomeNavHOC>
-                {/* <Invites /> */}
+                <Invites />
             </HomeNavHOC>
         </>
     )

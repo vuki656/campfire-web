@@ -2,9 +2,8 @@ import styled from 'styled-components'
 
 export const GroupInvitesUser = styled('div')((props) => ({
     alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: 'grid',
+    gridTemplateColumns: 'auto 1fr auto',
     marginBottom: props.theme.spacing.md,
 }))
 
@@ -13,11 +12,6 @@ export const GroupInvitesUserImage = styled('img')((props) => ({
     gridTemplateArea: 'image',
     marginRight: props.theme.spacing.md,
 }))
-
-export const GroupInvitesUserDetails = styled('div')({
-    alignItems: 'center',
-    display: 'flex',
-})
 
 export const GroupInvitesListItemDetails = styled('div')((props) => ({
     display: 'grid',
@@ -29,10 +23,3 @@ export const GroupInvitesListItemDetails = styled('div')((props) => ({
     gridTemplateRows: '1fr 1fr',
 }))
 
-export const GroupInvitesToUsername = styled('div')((props) => ({
-    gridTemplateArea: 'toUserUsername',
-}))
-
-export const InvitesFromUser = styled('div')((props) => ({
-    gridTemplateArea: 'fromUser',
-}))

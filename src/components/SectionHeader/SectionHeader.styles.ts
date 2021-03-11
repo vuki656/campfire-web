@@ -1,10 +1,15 @@
 import styled from 'styled-components'
 
-export const SectionHeaderRoot = styled('div')((props) => ({
+import type { SectionHeaderProps } from './SectionHeader.types'
+
+type SectionHeaderRootProps = Pick<SectionHeaderProps, 'topSpacing'>
+
+export const SectionHeaderRoot = styled('div')<SectionHeaderRootProps>((props) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     marginBottom: props.theme.spacing.md,
+    marginTop: props.topSpacing ? props.theme.spacing.xl : 0,
 }))
 
 export const SectionHeaderTopSection = styled('div')({

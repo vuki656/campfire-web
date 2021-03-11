@@ -45,8 +45,9 @@ export const NON_GROUP_MEMBERS = gql`
 `
 
 export const GROUP_INVITES = gql`
-    query GroupInvites($args: GroupInvitesArgs!) {
+    query GroupInvites($args: GroupInvitesArgs!, $nonGroupMembersArgs: NonGroupMembersArgs!) {
         groupInvites(args: $args) {
+            id
             fromUser {
                 id
                 imageURL
@@ -57,6 +58,11 @@ export const GROUP_INVITES = gql`
                 imageURL
                 username
             }
+        }
+        nonGroupMembers(args: $nonGroupMembersArgs) {
+            id
+            imageURL
+            username
         }
     }
 `
