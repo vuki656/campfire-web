@@ -70,7 +70,7 @@ export const Invites: React.FunctionComponent = () => {
 
     return (
         <div>
-            <SectionHeader title="Invite Members" />
+            <SectionHeader title="Invite Users" />
             {data?.nonGroupMembers.map((user) => {
                 return (
                     <Invite
