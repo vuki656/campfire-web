@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/dist/client/router'
 import React from 'react'
 
+import { SectionHeader } from '../../components'
 import { Post } from '../../components/Post'
 import { GROUP } from '../../graphql/queries'
 import type {
@@ -10,10 +11,8 @@ import type {
 } from '../../graphql/types'
 
 import {
-    GroupHeader,
     GroupPosts,
     GroupRoot,
-    GroupTitle,
 } from './Group.styles'
 import { GroupAddDialog } from './GroupAddDialog'
 
@@ -31,14 +30,16 @@ export const Group: React.FunctionComponent = () => {
 
     return (
         <GroupRoot>
-            <GroupHeader>
-                <GroupTitle>
-                    {data?.group.name}
-                </GroupTitle>
-                <GroupAddDialog />
-            </GroupHeader>
+            <SectionHeader
+                actions={<GroupAddDialog />}
+                title={data?.group?.name ?? ''}
+            />
             <GroupPosts>
                 {data?.group?.posts?.map((post) => {
+                    if (!post) {
+                        return null
+                    }
+
                     return (
                         <Post
                             key={post.id}

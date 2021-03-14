@@ -1,9 +1,11 @@
 import { useQuery } from '@apollo/client'
 import React from 'react'
 
-import { PageHeader } from '../../components/PageHeader/PageHeader'
-import { Post } from '../../components/Post'
-import { FAVORITE_POSTS } from '../../graphql/queries/Post'
+import {
+    Post,
+    SectionHeader,
+} from '../../components'
+import { FAVORITE_POSTS } from '../../graphql/queries'
 import type { FavoritePostsQuery } from '../../graphql/types'
 
 import { FavoritesRoot } from './Favorites.styles'
@@ -15,7 +17,7 @@ export const Favorites: React.FunctionComponent = () => {
 
     return (
         <FavoritesRoot>
-            <PageHeader title="Favorites" />
+            <SectionHeader title="Favorites" />
             {data?.favoritePosts.map((post) => {
                 return (
                     <Post

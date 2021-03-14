@@ -2,7 +2,6 @@ import type { ApolloError } from '@apollo/client'
 import { useMutation } from '@apollo/client'
 import { TextField } from '@dvukovic/dujo-ui'
 import { useFormik } from 'formik'
-import Cookies from 'js-cookie'
 import { useRouter } from 'next/dist/client/router'
 import React from 'react'
 import * as Yup from 'yup'
@@ -12,6 +11,7 @@ import type {
     LogInUserMutation,
     LogInUserMutationVariables,
 } from '../../graphql/types'
+import { useCookies } from '../../lib/useCookies'
 
 import {
     LoginButton,
@@ -33,8 +33,12 @@ const ValidationSchema = Yup.object().shape({
 
 export const Login: React.FunctionComponent = () => {
     const router = useRouter()
+    const cookies = useCookies()
 
-    const [logInUserMutation, { loading }] = useMutation<LogInUserMutation, LogInUserMutationVariables>(LOG_IN_USER)
+    const [logInUserMutation, { loading }] = useMutation<
+        LogInUserMutation,
+        LogInUserMutationVariables
+    >(LOG_IN_USER)
 
     const {
         errors,
@@ -58,8 +62,11 @@ export const Login: React.FunctionComponent = () => {
             })
                 .then((response) => {
                     const token = response?.data?.logInUser.token ?? ''
+                    const userId = response?.data?.logInUser.userId ?? ''
 
-                    Cookies.set('token', token)
+                    cookies.actions.setToken(token)
+                    cookies.actions.setUserId(userId)
+
                     void router.push('/home')
                 })
                 .catch((error: ApolloError) => {

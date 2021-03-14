@@ -1,15 +1,17 @@
 export type PostType = {
     id: string
-    description?: string
+    description?: string | null
     link: string
     createdAt: string
-    title?: string
-    imageLink?: string
-    faviconLink?: string
+    metadata?: {
+        title?: string | null
+        imageLink?: string | null
+        siteName?: string | null
+        faviconLink?: string | null
+    } | null
     favoritedBy?: {
-      userId: string
+        userId: string
     }[] | null
-    siteName?: string
     author: {
         id: string
         username: string

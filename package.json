@@ -8,7 +8,7 @@
     "lint": "eslint ./src",
     "start": "next start",
     "schema": "apollo client:download-schema --endpoint=http://localhost:8080/graphql ./src/graphql/schema.graphql",
-    "codegen": "graphql-codegen --config ./src/graphql/codegen.yml"
+    "codegen": "graphql-codegen --config ./src/graphql/codegen.yml --target typescript --outputFlat"
   },
   "dependencies": {
     "@apollo/client": "^3.3.11",
@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "@dvukovic/eslint-config": "^5.4.0",
-    "@graphql-codegen/add": "^2.0.1",
     "@graphql-codegen/cli": "^1.19.2",
     "@graphql-codegen/typescript": "^1.17.11",
     "@graphql-codegen/typescript-operations": "^1.17.10",
@@ -36,6 +35,7 @@
     "@types/styled-components": "^5.1.7",
     "@types/yup": "^0.29.11",
     "@typescript-eslint/parser": "^4.15.2",
+    "babel-plugin-styled-components": "^1.12.0",
     "eslint": "^7.20.0",
     "typescript": "^4.2.2"
   }

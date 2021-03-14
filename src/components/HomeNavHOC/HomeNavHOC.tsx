@@ -1,176 +1,104 @@
 import { useQuery } from '@apollo/client'
-import Cookies from 'js-cookie'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-import {
-    GROUP,
-    USER,
-} from '../../graphql/queries'
+import { GROUP } from '../../graphql/queries'
 import type {
     GroupQuery,
     GroupQueryVariables,
-    UserQuery,
 } from '../../graphql/types'
+import { useCookies } from '../../lib/useCookies'
 
-import {
-    HomeNavHOCList,
-    HomeNavHOCListItem,
-    HomeNavHOCRoot,
-    HomeNavHocSettings,
-    HomeNavHocSubtitle,
-} from './HomeNavHOC.styles'
+import { HomeNavHOCRoot } from './HomeNavHOC.styles'
+import { HomeNavHOCListItem } from './HomeNavHOCItem'
+import { HomeNavHOCList } from './HomeNavHOCList'
 
 export const HomeNavHOC: React.FunctionComponent = (props) => {
     const { children } = props
 
     const router = useRouter()
+    const cookies = useCookies()
 
-    const { data: userData } = useQuery<UserQuery>(USER)
-    const { data: groupData } = useQuery<GroupQuery, GroupQueryVariables>(GROUP, {
+    const groupId = router.query.groupId as string
+
+    const { data } = useQuery<GroupQuery, GroupQueryVariables>(GROUP, {
         fetchPolicy: 'network-only',
+        skip: !groupId,
         variables: {
             args: {
-                groupId: router.query.groupId as string,
+                groupId: groupId,
             },
         },
     })
 
     const handleLogout = () => {
-        Cookies.remove('token')
+        cookies.actions.removeAll()
 
         void router.push('/')
     }
 
-    const iconSize = { height: 20, width: 20 }
+    const isUserGroupOwner = cookies.userId === data?.group?.author?.id
 
     return (
         <HomeNavHOCRoot>
-            <HomeNavHOCList>
-                <HomeNavHOCListItem
-                    onClick={() => void router.push('/home')}
-                    startIcon={(
-                        <Image
-                            height={iconSize.height}
-                            quality={100}
-                            src="/icons/list.svg"
-                            width={iconSize.width}
-                        />
-                    )}
-                    variant="blank"
+            <div>
+                <HomeNavHOCList
+                    disableSpacing={true}
+                    title="Menu"
                 >
-                    Campfires
-                </HomeNavHOCListItem>
-                <HomeNavHOCListItem
-                    onClick={() => void router.push('/home/favorites')}
-                    startIcon={(
-                        <Image
-                            height={iconSize.height}
-                            quality={100}
-                            src="/icons/star.svg"
-                            width={iconSize.width}
-                        />
-                    )}
-                    variant="blank"
-                >
-                    Favorites
-                </HomeNavHOCListItem>
-                <HomeNavHOCListItem
-                    onClick={() => void router.push('/home/invites')}
-                    startIcon={(
-                        <Image
-                            height={iconSize.height}
-                            quality={100}
-                            src="/icons/invite.svg"
-                            width={iconSize.width}
-                        />
-                    )}
-                    variant="blank"
-                >
-                    Invites
-                </HomeNavHOCListItem>
-                <HomeNavHOCListItem
-                    onClick={handleLogout}
-                    startIcon={(
-                        <Image
-                            height={iconSize.height}
-                            quality={100}
-                            src="/icons/logout.svg"
-                            width={iconSize.width}
-                        />
-                    )}
-                    variant="blank"
-                >
-                    Log Out
-                </HomeNavHOCListItem>
-                {userData?.user.id === groupData?.group.author.id
+                    <HomeNavHOCListItem
+                        iconName="bricks"
+                        label="Campfires"
+                        linkPath="/home"
+                    />
+                    <HomeNavHOCListItem
+                        iconName="star"
+                        label="Favorites"
+                        linkPath="/home/favorites"
+                    />
+                    <HomeNavHOCListItem
+                        iconName="exit"
+                        label="Log Out"
+                        onClick={handleLogout}
+                    />
+                </HomeNavHOCList>
+                {isUserGroupOwner
                     ? (
-                        <HomeNavHocSettings>
-                            <HomeNavHocSubtitle>
-                                Campfire Settings
-                            </HomeNavHocSubtitle>
+                        <HomeNavHOCList title="Settings">
                             <HomeNavHOCListItem
+                                iconName="people"
+                                label="Members"
                                 onClick={() => void router.push({
                                     pathname: '/home/groups/[groupId]/members',
                                     query: {
                                         groupId: router.query.groupId as string,
                                     },
                                 })}
-                                startIcon={(
-                                    <Image
-                                        height={iconSize.height}
-                                        quality={100}
-                                        src="/icons/people.svg"
-                                        width={iconSize.width}
-                                    />
-                                )}
-                                variant="blank"
-                            >
-                                Members
-                            </HomeNavHOCListItem>
+                            />
                             <HomeNavHOCListItem
+                                iconName="letter"
+                                label="Invites"
                                 onClick={() => void router.push({
                                     pathname: '/home/groups/[groupId]/invites',
                                     query: {
                                         groupId: router.query.groupId as string,
                                     },
                                 })}
-                                startIcon={(
-                                    <Image
-                                        height={iconSize.height}
-                                        quality={100}
-                                        src="/icons/invite.svg"
-                                        width={iconSize.width}
-                                    />
-                                )}
-                                variant="blank"
-                            >
-                                Invites
-                            </HomeNavHOCListItem>
+                            />
                             <HomeNavHOCListItem
+                                iconName="cog"
+                                label="Settings"
                                 onClick={() => void router.push({
                                     pathname: '/home/groups/[groupId]/settings',
                                     query: {
                                         groupId: router.query.groupId as string,
                                     },
                                 })}
-                                startIcon={(
-                                    <Image
-                                        height={iconSize.height}
-                                        quality={100}
-                                        src="/icons/cog.svg"
-                                        width={iconSize.width}
-                                    />
-                                )}
-                                variant="blank"
-                            >
-                                Settings
-                            </HomeNavHOCListItem>
-                        </HomeNavHocSettings>
+                            />
+                        </HomeNavHOCList>
                     )
                     : null}
-            </HomeNavHOCList>
+            </div>
             {children}
         </HomeNavHOCRoot>
     )

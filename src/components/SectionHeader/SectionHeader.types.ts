@@ -1,6 +1,7 @@
 import type React from 'react'
 
-export type PageHeaderProps = {
+export type SectionHeaderProps = {
     title: string
     actions?: React.ReactElement
+    topSpacing?: boolean
 }

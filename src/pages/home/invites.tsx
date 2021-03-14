@@ -4,7 +4,6 @@ import * as React from 'react'
 
 import { HomeNavHOC } from '../../components/HomeNavHOC'
 import { NavigationBar } from '../../components/NavigationBar'
-import { UserInvites } from '../../modules/UserInvites'
 
 const UserInvitesPage: NextPage = () => {
     return (
@@ -16,7 +15,7 @@ const UserInvitesPage: NextPage = () => {
             </NextHead>
             <NavigationBar />
             <HomeNavHOC>
-                <UserInvites />
+                {/* <UserInvites /> */}
             </HomeNavHOC>
         </>
     )

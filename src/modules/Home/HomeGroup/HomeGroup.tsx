@@ -1,9 +1,7 @@
-import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-import { USER } from '../../../graphql/queries'
-import type { UserQuery } from '../../../graphql/types'
+import { useCookies } from '../../../lib/useCookies'
 import { HomeEditDialog } from '../HomeEditDialog'
 
 import {
@@ -19,8 +17,7 @@ export const HomeGroup: React.FunctionComponent<HomeGroupProps> = (props) => {
     const { group } = props
 
     const router = useRouter()
-
-    const { data } = useQuery<UserQuery>(USER)
+    const cookies = useCookies()
 
     const handleClick = () => {
         void router.push({
@@ -29,13 +26,15 @@ export const HomeGroup: React.FunctionComponent<HomeGroupProps> = (props) => {
         })
     }
 
+    const isUserGroupOwner = group?.author?.id === cookies.userId
+
     return (
         <HomeGroupRoot onClick={handleClick}>
             <HomeGroupHeader>
                 <HomeGroupTitle>
                     {group.name}
                 </HomeGroupTitle>
-                {group.author.id === data?.user?.id
+                {isUserGroupOwner
                     ? (
                         <HomeGroupActions>
                             <HomeEditDialog group={group} />
@@ -44,9 +43,9 @@ export const HomeGroup: React.FunctionComponent<HomeGroupProps> = (props) => {
                     : null}
             </HomeGroupHeader>
             <HomeGroupAuthor>
-                Author:
+                Created by:
                 {' '}
-                {group.author.username}
+                {group?.author?.username}
             </HomeGroupAuthor>
         </HomeGroupRoot>
     )

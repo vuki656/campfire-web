@@ -15,6 +15,11 @@ export const CREATE_POST = gql`
 
 export const FAVORITE_POST = gql`
     mutation FavoritePost($input: FavoritePostInput!) {
-        favoritePost(input: $input) 
+        favoritePost(input: $input) {
+            post {
+                ...PostPayload
+            }
+        }
     }
+    ${POST_PAYLOAD}
 `

@@ -4,7 +4,7 @@ import React from 'react'
 
 import { HomeNavHOC } from '../../../../components/HomeNavHOC'
 import { NavigationBar } from '../../../../components/NavigationBar'
-import { Invites } from '../../../../modules/Invites'
+import { Invites } from '../../../../modules/GroupInvites'
 
 const InvitesPage: NextPage = () => {
     return (

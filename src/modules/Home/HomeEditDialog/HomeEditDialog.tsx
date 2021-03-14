@@ -31,9 +31,13 @@ const ValidationSchema = Yup.object().shape({
 
 export const HomeEditDialog: React.FunctionComponent<HomeGroupsEditDialogProps> = (props) => {
     const { group } = props
+
     const [isOpen, toggleOpen] = useToggle(false)
 
-    const [editGroupMutation] = useMutation<EditGroupMutation, EditGroupMutationVariables>(EDIT_GROUP)
+    const [editGroupMutation, { loading }] = useMutation<
+        EditGroupMutation,
+        EditGroupMutationVariables
+    >(EDIT_GROUP)
 
     const {
         errors,
@@ -105,6 +109,7 @@ export const HomeEditDialog: React.FunctionComponent<HomeGroupsEditDialogProps> 
                             Cancel
                         </Button>
                         <Button
+                            loading={loading}
                             type="submit"
                             variant="outlined"
                         >
