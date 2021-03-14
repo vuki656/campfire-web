@@ -33,3 +33,12 @@ export const GROUP = gql`
     }
     ${GROUP_PAYLOAD}
 `
+
+export const GROUP_MEMBERS = gql`
+    query GroupMembers($args: GroupMembersArgs!) {
+        groupMembers(args: $args) {
+            ...UserPayload
+        }
+    }
+    ${USER_PAYLOAD}
+`

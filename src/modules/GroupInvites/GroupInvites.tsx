@@ -34,6 +34,7 @@ export const Invites: React.FunctionComponent = () => {
     const [deleteInviteMutation] = useMutation<DeleteInviteMutation, DeleteInviteMutationVariables>(DELETE_INVITE)
 
     const { data } = useQuery<GroupInvitesQuery, GroupInvitesQueryVariables>(GROUP_INVITES, {
+        fetchPolicy: 'network-only',
         variables: {
             args: {
                 groupId: groupId,
@@ -71,43 +72,55 @@ export const Invites: React.FunctionComponent = () => {
     return (
         <div>
             <SectionHeader title="Invite Users" />
-            {data?.nonGroupMembers.map((user) => {
-                return (
-                    <Invite
-                        action={(
-                            <Button
-                                onClick={handleInvite(user.id)}
-                                variant="outlined"
-                            >
-                                Invite
-                            </Button>
-                        )}
-                        key={user.id}
-                        user={user}
-                    />
-                )
-            })}
+            {data?.nonGroupMembers.length
+                ? data?.nonGroupMembers.map((user) => {
+                    return (
+                        <Invite
+                            action={(
+                                <Button
+                                    onClick={handleInvite(user.id)}
+                                    variant="outlined"
+                                >
+                                    Invite
+                                </Button>
+                            )}
+                            key={user.id}
+                            user={user}
+                        />
+                    )
+                })
+                : (
+                    <p>
+                        No one to invite, what?
+                    </p>
+                )}
             <SectionHeader
                 title="Invited Users"
                 topSpacing={true}
             />
-            {data?.groupInvites.map((invite) => {
-                return (
-                    <Invite
-                        action={(
-                            <Button
-                                onClick={handleInviteDelete(invite.id)}
-                                variant="outlined"
-                            >
-                                Delete
-                            </Button>
-                        )}
-                        key={invite.id}
-                        message={`Invited by ${invite.fromUser.username}`}
-                        user={invite.toUser}
-                    />
-                )
-            })}
+            {data?.groupInvites.length
+                ? data?.groupInvites.map((invite) => {
+                    return (
+                        <Invite
+                            action={(
+                                <Button
+                                    onClick={handleInviteDelete(invite.id)}
+                                    variant="outlined"
+                                >
+                                    Delete
+                                </Button>
+                            )}
+                            key={invite.id}
+                            message={`Invited by ${invite.fromUser.username}`}
+                            user={invite.toUser}
+                        />
+                    )
+                })
+                : (
+                    <p>
+                        No one is invited. Yet.
+                    </p>
+                )}
         </div>
     )
 }

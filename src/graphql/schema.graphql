@@ -125,6 +125,10 @@ input GroupInvitesArgs {
   groupId: String!
 }
 
+input GroupMembersArgs {
+  groupId: String!
+}
+
 type GroupType {
   id: String!
   name: String!
@@ -138,6 +142,15 @@ type InviteType {
   fromUser: UserType!
   toUser: UserType!
   group: GroupType
+}
+
+input KickUserFromGroupInput {
+  userId: String!
+  groupId: String!
+}
+
+type KickUserFromGroupPayload {
+  group: GroupType!
 }
 
 input LogInUserInput {
@@ -154,6 +167,7 @@ type Mutation {
   logInUser(input: LogInUserInput!): LogInUserPayload!
   createGroup(input: CreateGroupInput!): CreateGroupPayload!
   editGroup(input: EditGroupInput!): EditGroupPayload!
+  kickUserFromGroup(input: KickUserFromGroupInput!): KickUserFromGroupPayload!
   createPost(input: CreatePostInput!): CreatePostPayload!
   favoritePost(input: FavoritePostInput!): FavoritePostPayload!
   creteUserInvite(input: CreateInviteInput!): CreateInvitePayload!
@@ -190,6 +204,7 @@ type Query {
   user: UserType
   group(args: GroupArgs!): GroupType
   userCreatedGroups: [GroupType!]!
+  groupMembers(args: GroupMembersArgs!): [UserType!]!
   userJoinedGroups: [GroupType!]!
   favoritePosts: [PostType!]!
   userInvites: [InviteType!]!
