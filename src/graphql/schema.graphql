@@ -38,6 +38,15 @@ directive @connection(
   filter: [String!]
 ) on FIELD
 
+input AcceptInviteInput {
+  groupId: String!
+  inviteId: String!
+}
+
+type AcceptInvitePayload {
+  user: UserType!
+}
+
 input CreateGroupInput {
   name: String!
 }
@@ -70,6 +79,14 @@ type CreatePostPayload {
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
+
+input DeclineInviteInput {
+  inviteId: String!
+}
+
+type DeclineInvitePayload {
+  invite: InviteType!
+}
 
 input DeleteInviteInput {
   inviteId: String!
@@ -140,6 +157,8 @@ type Mutation {
   createPost(input: CreatePostInput!): CreatePostPayload!
   favoritePost(input: FavoritePostInput!): FavoritePostPayload!
   creteUserInvite(input: CreateInviteInput!): CreateInvitePayload!
+  acceptInvite(input: AcceptInviteInput!): AcceptInvitePayload!
+  declineInvite(input: DeclineInviteInput!): DeclineInvitePayload!
   deleteInvite(input: DeleteInviteInput!): DeleteInvitePayload!
 }
 

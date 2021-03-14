@@ -52,6 +52,7 @@ export const HomeAddDialog: React.FunctionComponent = () => {
                 },
             })
 
+            resetForm()
             toggleOpen()
         },
         validateOnChange: false,

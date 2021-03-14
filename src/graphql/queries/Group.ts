@@ -1,6 +1,9 @@
 import { gql } from '@apollo/client'
 
-import { GROUP_PAYLOAD } from '../fragments'
+import {
+    GROUP_PAYLOAD,
+    USER_PAYLOAD,
+} from '../fragments'
 
 export const GROUPS = gql`
     query Groups {
@@ -8,21 +11,18 @@ export const GROUPS = gql`
             id
             name
             author {
-                id
-                username
-                imageURL
+                ...UserPayload
             }
         }
         userJoinedGroups {
             id
             name
             author {
-                id
-                username
-                imageURL
+                ...UserPayload
             }
         }
     }
+    ${USER_PAYLOAD}
 `
 
 export const GROUP = gql`
@@ -32,37 +32,4 @@ export const GROUP = gql`
         }
     }
     ${GROUP_PAYLOAD}
-`
-
-export const NON_GROUP_MEMBERS = gql`
-    query NonGroupMembers($args: NonGroupMembersArgs!) {
-        nonGroupMembers(args: $args) {
-            id
-            imageURL
-            username
-        }
-    }
-`
-
-export const GROUP_INVITES = gql`
-    query GroupInvites($args: GroupInvitesArgs!, $nonGroupMembersArgs: NonGroupMembersArgs!) {
-        groupInvites(args: $args) {
-            id
-            fromUser {
-                id
-                imageURL
-                username
-            }
-            toUser {
-                id
-                imageURL
-                username
-            }
-        }
-        nonGroupMembers(args: $nonGroupMembersArgs) {
-            id
-            imageURL
-            username
-        }
-    }
 `

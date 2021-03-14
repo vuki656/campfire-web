@@ -9,7 +9,9 @@ import { HomeAddDialog } from './HomeAddDialog'
 import { HomeSection } from './HomeSection'
 
 export const Home: React.FunctionComponent = () => {
-    const { data } = useQuery<GroupsQuery>(GROUPS)
+    const { data } = useQuery<GroupsQuery>(GROUPS, {
+        fetchPolicy: 'network-only',
+    })
 
     return (
         <HomeRoot>

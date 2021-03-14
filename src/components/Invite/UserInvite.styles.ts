@@ -31,8 +31,9 @@ export const UserInviteMessage = styled('p')({
 })
 
 export const UserInviteActions = styled('div')((props) => ({
-    columnGap: props.theme.spacing.md,
+    columnGap: props.theme.spacing.xs,
     display: 'grid',
     gridArea: 'actions',
+    gridTemplateColumns: 'repeat(2, 1fr)',
     gridTemplateRows: '1fr',
 }))

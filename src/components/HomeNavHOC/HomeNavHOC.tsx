@@ -2,14 +2,21 @@ import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-import { GROUP } from '../../graphql/queries'
+import {
+    GROUP,
+    USER_INVITES,
+} from '../../graphql/queries'
 import type {
     GroupQuery,
     GroupQueryVariables,
+    UserInvitesQuery,
 } from '../../graphql/types'
 import { useCookies } from '../../lib/useCookies'
 
-import { HomeNavHOCRoot } from './HomeNavHOC.styles'
+import {
+    HomeNavHOCInviteAmount,
+    HomeNavHOCRoot,
+} from './HomeNavHOC.styles'
 import { HomeNavHOCListItem } from './HomeNavHOCItem'
 import { HomeNavHOCList } from './HomeNavHOCList'
 
@@ -31,6 +38,8 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
         },
     })
 
+    const { data: userInvitesData } = useQuery<UserInvitesQuery>(USER_INVITES)
+
     const handleLogout = () => {
         cookies.actions.removeAll()
 
@@ -38,6 +47,7 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
     }
 
     const isUserGroupOwner = cookies.userId === data?.group?.author?.id
+    const userInvitesNumber = userInvitesData?.userInvites.length
 
     return (
         <HomeNavHOCRoot>
@@ -55,6 +65,23 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
                         iconName="star"
                         label="Favorites"
                         linkPath="/home/favorites"
+                    />
+                    <HomeNavHOCListItem
+                        iconName="letter"
+                        label={(
+                            <>
+                                Invites
+                                {' '}
+                                {userInvitesNumber
+                                    ? (
+                                        <HomeNavHOCInviteAmount>
+                                            {userInvitesNumber}
+                                        </HomeNavHOCInviteAmount>
+                                    )
+                                    : null}
+                            </>
+                        )}
+                        linkPath="/home/invites"
                     />
                     <HomeNavHOCListItem
                         iconName="exit"

@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client/core'
 
 import { POST_PAYLOAD } from './Post'
+import { USER_PAYLOAD } from './User'
 
 export const GROUP_PAYLOAD = gql`
     fragment GroupPayload on GroupType {
@@ -10,10 +11,9 @@ export const GROUP_PAYLOAD = gql`
             ...PostPayload
         }
         author {
-            id
-            username
-            imageURL
+            ...UserPayload
         }
     }
     ${POST_PAYLOAD}
+    ${USER_PAYLOAD}
 `

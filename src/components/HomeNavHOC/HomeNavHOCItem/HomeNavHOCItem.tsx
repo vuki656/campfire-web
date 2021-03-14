@@ -19,7 +19,7 @@ export const HomeNavHOCListItem: React.FunctionComponent<HomeNavHOCListItemProps
         if (linkPath) {
             void router.push(linkPath)
         } else {
-            onClick()
+            onClick?.()
         }
     }
 
