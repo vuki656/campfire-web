@@ -14,7 +14,7 @@ import {
 } from './NavigationBar.styles'
 
 export const NavigationBar: React.FunctionComponent = () => {
-    const { data } = useQuery<UserQuery>(                 USER)
+    const { data } = useQuery<UserQuery>(USER)
 
     return (
         <NavigationBarRoot>
