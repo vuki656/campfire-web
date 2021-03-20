@@ -1,4 +1,7 @@
-import { useQuery } from '@apollo/client'
+import {
+    useApolloClient,
+    useQuery,
+} from '@apollo/client'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -25,6 +28,7 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
 
     const router = useRouter()
     const cookies = useCookies()
+    const apollo = useApolloClient()
 
     const groupId = router.query.groupId as string
 
@@ -40,10 +44,11 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
 
     const { data: userInvitesData } = useQuery<UserInvitesQuery>(USER_INVITES)
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         cookies.actions.removeAll()
+        await apollo.clearStore()
 
-        void router.push('/')
+        await router.push('/')
     }
 
     const isUserGroupOwner = cookies.userId === data?.group?.author?.id
@@ -107,16 +112,6 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
                                 label="Invites"
                                 onClick={() => void router.push({
                                     pathname: '/home/groups/[groupId]/invites',
-                                    query: {
-                                        groupId: router.query.groupId as string,
-                                    },
-                                })}
-                            />
-                            <HomeNavHOCListItem
-                                iconName="cog"
-                                label="Settings"
-                                onClick={() => void router.push({
-                                    pathname: '/home/groups/[groupId]/settings',
                                     query: {
                                         groupId: router.query.groupId as string,
                                     },

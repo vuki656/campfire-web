@@ -53,26 +53,32 @@ export const GroupMembers: React.FunctionComponent = () => {
     return (
         <div>
             <SectionHeader title="Members" />
-            {data?.groupMembers.map((member) => {
-                return (
-                    <GroupMember key={member.id}>
-                        <GroupMemberImage
-                            height={50}
-                            src={member.imageURL}
-                            width={50}
-                        />
-                        <GroupMemberUsername>
-                            {member.username}
-                        </GroupMemberUsername>
-                        <GroupMemberAction
-                            onClick={handleUserKick(member.id)}
-                            variant="outlined"
-                        >
-                            Kick
-                        </GroupMemberAction>
-                    </GroupMember>
-                )
-            })}
+            {data?.groupMembers.length
+                ? data.groupMembers.map((member) => {
+                    return (
+                        <GroupMember key={member.id}>
+                            <GroupMemberImage
+                                height={50}
+                                src={member.imageURL}
+                                width={50}
+                            />
+                            <GroupMemberUsername>
+                                {member.username}
+                            </GroupMemberUsername>
+                            <GroupMemberAction
+                                onClick={handleUserKick(member.id)}
+                                variant="outlined"
+                            >
+                                Kick
+                            </GroupMemberAction>
+                        </GroupMember>
+                    )
+                })
+                : (
+                    <p>
+                        Campfire has no members yet. Invite some friends.
+                    </p>
+                )}
         </div>
 
     )
