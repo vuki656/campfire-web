@@ -14,14 +14,14 @@ import {
 } from './NavigationBar.styles'
 
 export const NavigationBar: React.FunctionComponent = () => {
-    const { data } = useQuery<UserQuery>(USER)
+    const { data } = useQuery<UserQuery>(                 USER)
 
     return (
         <NavigationBarRoot>
             <NavigationBarTitle>
                 <Image
                     height={35}
-                    src="/icons/logo-icon.svg"
+                    src="/icons/logo.svg"
                     width={35}
                 />
                 <NavigationBarLogoTitle>

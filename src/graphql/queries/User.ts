@@ -10,3 +10,11 @@ export const USER = gql`
     }
     ${USER_PAYLOAD}
 `
+
+export const VERIFY_USER = gql`
+    query VerifyUser {
+        verifyUser {
+            isValid
+        }
+    }
+`

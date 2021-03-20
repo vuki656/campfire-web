@@ -201,6 +201,7 @@ type PostType {
 
 type Query {
   nonGroupMembers(args: NonGroupMembersArgs!): [UserType!]!
+  verifyUser: VerifyUserPayload!
   user: UserType
   group(args: GroupArgs!): GroupType
   userCreatedGroups: [GroupType!]!
@@ -215,4 +216,8 @@ type UserType {
   id: String!
   username: String!
   imageURL: String!
+}
+
+type VerifyUserPayload {
+  isValid: Boolean!
 }

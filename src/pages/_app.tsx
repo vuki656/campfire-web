@@ -8,6 +8,7 @@ import type { AppProps } from 'next/app'
 import NextApp from 'next/app'
 import React from 'react'
 
+import { Authentication } from '../components/Authentication'
 import { useApolloClient } from '../lib/useApolloClient'
 
 const App = (props: AppProps): JSX.Element => {
@@ -21,10 +22,12 @@ const App = (props: AppProps): JSX.Element => {
 
     return (
         <ApolloProvider client={client}>
-            <ThemeProvider theme={theme}>
-                <GlobalStyles />
-                <Component {...pageProps} />
-            </ThemeProvider>
+            <Authentication>
+                <ThemeProvider theme={theme}>
+                    <GlobalStyles />
+                    <Component {...pageProps} />
+                </ThemeProvider>
+            </Authentication>
         </ApolloProvider>
     )
 }

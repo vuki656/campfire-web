@@ -49,8 +49,6 @@ export const HomeNavHOC: React.FunctionComponent = (props) => {
     const isUserGroupOwner = cookies.userId === data?.group?.author?.id
     const userInvitesNumber = userInvitesData?.userInvites.length
 
-    console.log(isUserGroupOwner)
-
     return (
         <HomeNavHOCRoot>
             <div>
