@@ -72,9 +72,9 @@ export const Post: React.FunctionComponent<PostProps> = (props) => {
                     )
                     : null}
                 <PostImage
-                    alt={post.metadata?.title}
+                    alt={post.metadata?.title ?? ''}
                     loading="lazy"
-                    src={post.metadata?.imageLink}
+                    src={post.metadata?.imageLink ?? ''}
                 />
                 <PostActions>
                     <Button

@@ -4,8 +4,8 @@ import type { UseCookiesValue } from './useCookies.types'
 import { CookiesEnum } from './useCookies.types'
 
 export const useCookies = (): UseCookiesValue => {
-    const userId = Cookies.get(CookiesEnum.USER_ID)
-    const token = Cookies.get(CookiesEnum.TOKEN)
+    const userId = Cookies.get(CookiesEnum.USER_ID) ?? ''
+    const token = Cookies.get(CookiesEnum.TOKEN) ?? ''
 
     const setToken = (value: string) => {
         Cookies.set(CookiesEnum.TOKEN, value)
