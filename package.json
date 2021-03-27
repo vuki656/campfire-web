@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "start-dev": "next dev",
+    "build": "yarn codegen && next build",
     "lint": "eslint ./src",
-    "start": "next start",
+    "start-prod": "next start",
     "schema": "apollo client:download-schema --endpoint=http://localhost:8080/graphql ./src/graphql/schema.graphql",
     "codegen": "graphql-codegen --config ./src/graphql/codegen.yml --target typescript --outputFlat"
   },
